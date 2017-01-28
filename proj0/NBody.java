@@ -33,6 +33,7 @@ public class NBody {
 				p.draw();
 			}
 			StdDraw.show(10);
+			time += dT;
 		}
 		StdOut.printf("%d\n", planets.length);
 		StdOut.printf("%.2e\n", radius);
