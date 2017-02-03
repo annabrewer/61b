@@ -74,6 +74,7 @@ public class IntListTest {
         IntList C = IntList.list(null);
         IntList D = IntList.reverse(C);
         assertEquals(D, null);
+    }
 
     /** If you're running this from the command line, you'll need
       * to add a main method. See ArithmeticTest.java for an
