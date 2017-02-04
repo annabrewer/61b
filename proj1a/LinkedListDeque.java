@@ -77,24 +77,24 @@ public class LinkedListDeque<Item> {
     }
 
     public Item removeFirst() {
-    	Item temp = null;
-    	if (sentinel.getNext() != null) {
-        	temp = sentinel.getNext().getItem();
+        Item temp = null;
+        if (sentinel.getNext() != null) {
+            temp = sentinel.getNext().getItem();
         }
         if (sentinel.getNext() != null) {
-        	sentinel.setNext(sentinel.getNext().getNext());
+            sentinel.setNext(sentinel.getNext().getNext());
         }
         size -= 1;
         return temp;
     }
 
     public Item removeLast() {
-    	Item temp = null;
-    	if (sentinel.getPrev() != null) {
-        	temp = sentinel.getPrev().getItem();
+        Item temp = null;
+        if (sentinel.getPrev() != null) {
+            temp = sentinel.getPrev().getItem();
         }
         if (sentinel.getPrev() != null) {
-        	sentinel.setPrev(sentinel.getPrev().getPrev());
+            sentinel.setPrev(sentinel.getPrev().getPrev());
         }
         size -= 1;
         return temp;

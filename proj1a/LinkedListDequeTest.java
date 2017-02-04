@@ -85,12 +85,13 @@ public class LinkedListDequeTest {
 
 		int tester2 = lld1.getRecursive(2);
 		System.out.println(tester2);
+		lld1.printDeque();
 
-		lld1.removeFirst();
-		lld1.removeLast();
-		lld1.removeLast();
-		lld1.removeLast();
-		lld1.removeFirst();
+		System.out.print(lld1.removeFirst());
+		System.out.print(lld1.removeLast());
+		System.out.print(lld1.removeLast());
+		System.out.print(lld1.removeLast());
+		System.out.print(lld1.removeFirst());
 		
 		// should be empty 
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
@@ -111,7 +112,6 @@ public class LinkedListDequeTest {
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
-		addRemoveTest();
 		addRemoveTest();
 	}
 } 

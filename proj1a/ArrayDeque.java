@@ -95,17 +95,42 @@ public class ArrayDeque<Item> {
     public Item removeFirst() {
         Item x = get(0);
         size -= 1;
+        manageStorage();
         return x;
     }
 
     public Item removeLast() {
         Item x = get(size - 1);
         size -= 1;
+        manageStorage();
         return x;
         //do not need to actually set last item to 0
     }
 
     public Item get(int index) {
         return items[(nextFirst + index + 1) % items.length];
+    }
+
+    private void manageStorage() {
+        if (items.length >= 16 && (size / items.length) < 0.25) {
+            resize(items.length / 2);
+            /*Item[] a = (Item[]) new Object[size/2]; 
+            int index = nextLast;
+            int counter = 0;
+            while (counter < size) {
+                a[counter] = items[index];
+                counter += 1;
+                index += 1;
+                if (index == size) {
+                    index = 0;
+                }
+            }
+            //System.arraycopy(items, nextFirst+1, a, 0, items.length-nextFirst);
+            //System.arraycopy(items, 0, a, items.length-nextFirst, nextFirst-nextLast);
+            nextLast = size;
+            nextFirst = a.length - 1;
+            items = a;
+        }*/
+        }
     }
 }

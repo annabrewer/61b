@@ -78,8 +78,16 @@ public class ArrayDequeTest {
 		// should be empty 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
-		lld1.addFirst(10);
-		lld1.addFirst(10);
+		lld1.addLast(0);
+        System.out.println("one:" + lld1.removeLast());
+        lld1.addLast(2);
+        lld1.addFirst(3);
+        System.out.println("two:" + lld1.removeFirst());
+        lld1.addFirst(5);
+        System.out.println("three:" + lld1.removeFirst());
+        System.out.println("four:" + lld1.removeLast());
+
+        lld1.printDeque();
 		
 		// should not be empty 
 		passed = checkEmpty(false, lld1.isEmpty()) && passed;
@@ -108,5 +116,20 @@ public class ArrayDequeTest {
 		addIsEmptySizeTest();
 		integerTest();
 		addRemoveTest();
+		storageTest();
+	}
+
+	public static void storageTest() {
+		ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+		int counter = 0;
+		while (counter < 30) {
+			lld1.addFirst(counter);
+			counter += 1;
+		}
+		while (counter > 3) {
+			lld1.removeLast();
+			counter -= 1;
+		}
+		lld1.printDeque();
 	}
 }
