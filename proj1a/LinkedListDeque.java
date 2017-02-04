@@ -75,11 +75,11 @@ public class LinkedListDeque<Item> {
     }
 
     public void printDeque() {
-        StuffNode p = sentinel;
+        StuffNode p = new StuffNode(sentinel.prev, sentinel.item, sentinel.next);
         //idk why this works
         int counter = 0;
         while (counter < size) {
-            System.out.println(p.item);
+            System.out.print(p.item);
             p = p.getNext();
             counter += 1;
         }
@@ -87,12 +87,9 @@ public class LinkedListDeque<Item> {
 
     public Item removeFirst() {
         Item temp = null;
-        if (sentinel.getNext() != null) {
-            temp = sentinel.getNext().getItem();
-        }
-        if (sentinel.getNext() != null) {
-            sentinel.setNext(sentinel.getNext().getNext());
-        }
+        temp = sentinel.getNext().getItem();
+        sentinel.setNext(sentinel.getNext().getNext());
+        sentinel.getNext().setPrev(sentinel);
         size -= 1;
         return temp;
     }
@@ -101,8 +98,9 @@ public class LinkedListDeque<Item> {
         Item temp = null;
         //System.out.println("ok" + sentinel.getPrev().getItem());
             //System.out.println("hello" + temp);
-            temp = sentinel.getPrev().getItem();
-            sentinel.setPrev(sentinel.getPrev().getPrev());
+        temp = sentinel.getPrev().getItem();
+        sentinel.setPrev(sentinel.getPrev().getPrev());
+        sentinel.getPrev().setNext(sentinel);
         /*else {
             System.out.print("fuck u lol");
         }*/
@@ -121,7 +119,7 @@ public class LinkedListDeque<Item> {
     }
 
     public Item get(int index) {
-        StuffNode p = new StuffNode (sentinel.prev, sentinel.item, sentinel.next);
+        StuffNode p = new StuffNode(sentinel.prev, sentinel.item, sentinel.next);
         while (index > 0) {
             p = p.getNext();
             index -= 1;

@@ -62,7 +62,7 @@ public class ArrayDequeTest {
 
 		System.out.println("size = " + counter);
 		System.out.println("Printing out deque: ");
-		lld1.printDeque();
+		//lld1.printDeque();
 
 		printTestStatus(passed);
 	}
@@ -113,10 +113,33 @@ public class ArrayDequeTest {
 
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
-		addIsEmptySizeTest();
+		/*addIsEmptySizeTest();
 		integerTest();
 		addRemoveTest();
-		storageTest();
+		storageTest();*/
+		testing123();
+		testingremoval();
+	}
+
+	public static void testing123() {
+		ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+		int counter = 0;
+		while (counter < 30) {
+			lld1.addFirst(counter);
+			counter += 1;
+		}
+		lld1.printDeque();
+	}
+
+	public static void testingremoval() {
+		ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+		int counter = 0;
+		lld1.addFirst(0);
+		lld1.addFirst(1);
+		lld1.addFirst(2);
+		lld1.addFirst(3);
+		lld1.removeFirst();
+		lld1.printDeque();
 	}
 
 	public static void storageTest() {
@@ -130,6 +153,6 @@ public class ArrayDequeTest {
 			lld1.removeLast();
 			counter -= 1;
 		}
-		lld1.printDeque();
+		//lld1.printDeque();
 	}
 }

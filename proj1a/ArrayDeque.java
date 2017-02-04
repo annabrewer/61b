@@ -51,15 +51,13 @@ public class ArrayDeque<Item> {
         //System.out.println(nextLast);
         //System.out.println("resize");
         Item[] a = (Item[]) new Object[newSize]; 
-        int index = nextLast;
+        //int index = nextLast;
         int counter = 0;
         while (counter < size) {
-            a[counter] = items[index];
+            a[counter] = get(counter);
+            //System.out.println(get(counter));
             counter += 1;
-            index += 1;
-            if (index == size) {
-                index = 0;
-            }
+            //index += 1;
         }
         //System.arraycopy(items, nextFirst+1, a, 0, items.length-nextFirst);
         //System.arraycopy(items, 0, a, items.length-nextFirst, nextFirst-nextLast);
@@ -77,11 +75,12 @@ public class ArrayDeque<Item> {
     }
 
     public void printDeque() {
-        for (Item i : items) {
-            System.out.print(i + " ");
+        int counter = 0;
+        while (counter < size) {
+            System.out.print(get(counter) + " ");
+            counter += 1;
         }
-        System.out.println(nextFirst);
-        System.out.println(nextLast);
+        System.out.println();
         /*int intndex = nextLast;
         while (index != nextFirst) {
             index += 1;
@@ -95,6 +94,7 @@ public class ArrayDeque<Item> {
     public Item removeFirst() {
         Item x = get(0);
         size -= 1;
+        //nextFirst += (nextFirst + 1) % items.length;
         manageStorage();
         return x;
     }
@@ -112,7 +112,7 @@ public class ArrayDeque<Item> {
     }
 
     private void manageStorage() {
-        if (items.length >= 16 && (size / items.length) < 0.25) {
+        if (items.length >= 16 && ((double)size / items.length) < 0.25) {
             resize(items.length / 2);
             /*Item[] a = (Item[]) new Object[size/2]; 
             int index = nextLast;

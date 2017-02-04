@@ -84,14 +84,13 @@ public class LinkedListDequeTest {
 		lld1.addFirst(4);
 
 		int tester2 = lld1.getRecursive(2);
-		System.out.println(tester2);
 		lld1.printDeque();
 
+		/*System.out.print(lld1.removeLast());
 		System.out.print(lld1.removeLast());
 		System.out.print(lld1.removeLast());
 		System.out.print(lld1.removeLast());
-		System.out.print(lld1.removeLast());
-		System.out.print(lld1.removeLast());
+		System.out.print(lld1.removeLast());*/
 		//System.out.print(lld1.removeFirst());
 		
 		// should be empty 
