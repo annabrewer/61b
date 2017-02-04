@@ -109,9 +109,16 @@ public class LinkedListDequeTest {
 		
 	}*/
 
+	public static void betterTest() {
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		lld1.addLast(1);
+		System.out.println(lld1.getRecursive(0));
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
-		addIsEmptySizeTest();
-		addRemoveTest();
+		//addIsEmptySizeTest();
+		//addRemoveTest();
+		betterTest();
 	}
 } 

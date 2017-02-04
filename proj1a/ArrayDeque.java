@@ -34,7 +34,7 @@ public class ArrayDeque<Item> {
         items[nextLast] = x;
         //System.out.println(x);
         //System.out.println(nextLast);
-        nextLast = (nextLast + 1) % items.length;
+        nextLast = (nextLast + items.length + 1) % items.length;
         /*if (nextLast == items.length - 1) {
             nextLast = 0;
         }
@@ -82,6 +82,8 @@ public class ArrayDeque<Item> {
         }
         System.out.println();
         System.out.println("size: " + size);
+        System.out.println("NF: " + nextFirst);
+        System.out.println("NL: " + nextLast);
 
         for (Item i : items) {
             System.out.print(i + " ");
@@ -109,7 +111,7 @@ public class ArrayDeque<Item> {
     public Item removeLast() {
         Item x = get(size - 1);
         size -= 1;
-        nextLast = (nextLast - 1) % items.length;
+        nextLast = (nextLast + items.length - 1) % items.length;
         manageStorage();
         return x;
         //do not need to actually set last item to 0

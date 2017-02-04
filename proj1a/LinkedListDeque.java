@@ -120,7 +120,7 @@ public class LinkedListDeque<Item> {
 
     public Item get(int index) {
         StuffNode p = new StuffNode(sentinel.prev, sentinel.item, sentinel.next);
-        while (index > 0) {
+        while (index >= 0) {
             p = p.getNext();
             index -= 1;
         }
@@ -133,7 +133,7 @@ public class LinkedListDeque<Item> {
     }
 
     private Item getRecursiveHelper(StuffNode p, int index) {
-        if (index == 0) {
+        if (index < 0) {
             return p.getItem();
         } else {
             return getRecursiveHelper(p.next, index - 1);

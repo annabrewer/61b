@@ -119,8 +119,50 @@ public class ArrayDequeTest {
 		storageTest();*/
 		//testing123();
 		//testingremoval();
-		testAgain();
+		//testAgain();
+		testAgain2();
 
+	}
+
+	public static void testAgain2() {
+		ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+
+		lld1.addLast(0);
+		lld1.printDeque();
+		System.out.println("----------");
+        lld1.get(0);
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.addLast(2);
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.removeFirst();
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.addLast(4);
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.removeFirst();
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.addFirst(6);
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.addLast(7);
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.removeLast();
+        lld1.printDeque();
+		System.out.println("----------");
+        lld1.printDeque();
+		System.out.println("----------");
+		
+        lld1.addLast(9);
+        lld1.printDeque();
+		System.out.println("----------");
+		lld1.addFirst(0);
+		lld1.printDeque();
+		System.out.println("----------");
 	}
 
 	public static void testAgain() {
@@ -140,7 +182,7 @@ public class ArrayDequeTest {
         lld1.addLast(3);
         lld1.printDeque();
         System.out.println("----------");
-        
+
         lld1.get(1);
         lld1.printDeque();
         System.out.println("----------");
