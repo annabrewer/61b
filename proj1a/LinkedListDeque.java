@@ -4,6 +4,8 @@ public class LinkedListDeque<Item> {
 
     public LinkedListDeque() {
         sentinel = new StuffNode(null, null, null);
+        sentinel.setPrev(sentinel);
+        sentinel.setNext(sentinel);
         size = 0;
     }
     
@@ -45,11 +47,16 @@ public class LinkedListDeque<Item> {
 
     public void addFirst(Item x) { 
         sentinel.setNext(new StuffNode(sentinel, x, sentinel.next));
+        sentinel.getNext().getNext().setPrev(sentinel.getNext());
+        //sentinel.setPrev(sentinel.getNext().getNext());
+        //System.out.println(sentinel.getPrev(), sentinel.getItem(), sentinel.getNext());
         size += 1;
     }
 
     public void addLast(Item x) {
         sentinel.setPrev(new StuffNode(sentinel.prev, x, sentinel));
+        sentinel.getPrev().getPrev().setNext(sentinel.getPrev());
+        //sentinel.setNext(sentinel.getPrev().getPrev());
         size += 1;
         /*StuffNode p = sentinel;
         while (p.next != null) {
@@ -70,9 +77,11 @@ public class LinkedListDeque<Item> {
     public void printDeque() {
         StuffNode p = sentinel;
         //idk why this works
-        while (p.getNext() != null) {
+        int counter = 0;
+        while (counter < size) {
             System.out.println(p.item);
             p = p.getNext();
+            counter += 1;
         }
     }
 
@@ -90,12 +99,13 @@ public class LinkedListDeque<Item> {
 
     public Item removeLast() {
         Item temp = null;
-        if (sentinel.getPrev() != null) {
+        //System.out.println("ok" + sentinel.getPrev().getItem());
+            //System.out.println("hello" + temp);
             temp = sentinel.getPrev().getItem();
-        }
-        if (sentinel.getPrev() != null) {
             sentinel.setPrev(sentinel.getPrev().getPrev());
-        }
+        /*else {
+            System.out.print("fuck u lol");
+        }*/
         size -= 1;
         return temp;
         /*StuffNode p = sentinel;
@@ -111,7 +121,7 @@ public class LinkedListDeque<Item> {
     }
 
     public Item get(int index) {
-        StuffNode p = sentinel;
+        StuffNode p = new StuffNode (sentinel.prev, sentinel.item, sentinel.next);
         while (index > 0) {
             p = p.getNext();
             index -= 1;

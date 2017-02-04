@@ -87,11 +87,12 @@ public class LinkedListDequeTest {
 		System.out.println(tester2);
 		lld1.printDeque();
 
-		System.out.print(lld1.removeFirst());
 		System.out.print(lld1.removeLast());
 		System.out.print(lld1.removeLast());
 		System.out.print(lld1.removeLast());
-		System.out.print(lld1.removeFirst());
+		System.out.print(lld1.removeLast());
+		System.out.print(lld1.removeLast());
+		//System.out.print(lld1.removeFirst());
 		
 		// should be empty 
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
