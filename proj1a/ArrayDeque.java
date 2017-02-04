@@ -19,10 +19,9 @@ public class ArrayDeque<Item> {
         items[nextFirst] = x;
         //System.out.println(x);
         //System.out.println(nextFirst);
-        if (nextFirst == 0) {
+        nextFirst -= 1;
+        if (nextFirst < 0) {
             nextFirst = items.length - 1;
-        } else {
-            nextFirst -= 1;
         }
         //System.out.println(size);
     }
@@ -35,7 +34,7 @@ public class ArrayDeque<Item> {
         items[nextLast] = x;
         //System.out.println(x);
         //System.out.println(nextLast);
-        nextLast = (nextLast+1)%items.length;
+        nextLast = (nextLast + 1) % items.length;
         /*if (nextLast == items.length - 1) {
             nextLast = 0;
         }
@@ -65,7 +64,7 @@ public class ArrayDeque<Item> {
         //System.arraycopy(items, nextFirst+1, a, 0, items.length-nextFirst);
         //System.arraycopy(items, 0, a, items.length-nextFirst, nextFirst-nextLast);
         nextLast = size;
-        nextFirst = a.length;
+        nextFirst = a.length - 1;
         items = a;
     }
 
@@ -100,13 +99,13 @@ public class ArrayDeque<Item> {
     }
 
     public Item removeLast() {
-        Item x = get(size-1);
+        Item x = get(size - 1);
         size -= 1;
         return x;
         //do not need to actually set last item to 0
     }
 
     public Item get(int index) {
-        return items[(nextFirst+index+1)%items.length];
+        return items[(nextFirst + index + 1) % items.length];
     }
 }

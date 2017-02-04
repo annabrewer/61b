@@ -19,27 +19,27 @@ public class LinkedListDeque<Item> {
         }
 
         public StuffNode getPrev() {
-        	return prev;
+            return prev;
         }
 
         public Item getItem() {
-        	return item;
+            return item;
         }
 
         public StuffNode getNext() {
-        	return next;
+            return next;
         }
 
         public void setPrev(StuffNode i) {
-        	prev = i;
+            prev = i;
         }
 
         public void setItem(Item i) {
-        	item = i;
+            item = i;
         }
 
         public void setNext(StuffNode i) {
-        	next = i;
+            next = i;
         }
     }
 
@@ -77,15 +77,25 @@ public class LinkedListDeque<Item> {
     }
 
     public Item removeFirst() {
-        Item temp = sentinel.getNext().getItem();
-        sentinel.setNext(sentinel.getNext().getNext());
+    	Item temp = null;
+    	if (sentinel.getNext() != null) {
+        	temp = sentinel.getNext().getItem();
+        }
+        if (sentinel.getNext() != null) {
+        	sentinel.setNext(sentinel.getNext().getNext());
+        }
         size -= 1;
         return temp;
     }
 
     public Item removeLast() {
-        Item temp = sentinel.getPrev().getItem();
-        sentinel.setPrev(sentinel.getPrev().getPrev());
+    	Item temp = null;
+    	if (sentinel.getPrev() != null) {
+        	temp = sentinel.getPrev().getItem();
+        }
+        if (sentinel.getPrev() != null) {
+        	sentinel.setPrev(sentinel.getPrev().getPrev());
+        }
         size -= 1;
         return temp;
         /*StuffNode p = sentinel;
@@ -117,8 +127,7 @@ public class LinkedListDeque<Item> {
     private Item getRecursiveHelper(StuffNode p, int index) {
         if (index == 0) {
             return p.getItem();
-        }
-        else {
+        } else {
             return getRecursiveHelper(p.next, index - 1);
         }
     }
