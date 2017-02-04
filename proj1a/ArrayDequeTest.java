@@ -117,8 +117,33 @@ public class ArrayDequeTest {
 		integerTest();
 		addRemoveTest();
 		storageTest();*/
-		testing123();
-		testingremoval();
+		//testing123();
+		//testingremoval();
+		testAgain();
+
+	}
+
+	public static void testAgain() {
+		ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+		lld1.addFirst(0);
+		lld1.printDeque();
+		System.out.println("----------");
+
+        lld1.removeFirst();
+        lld1.printDeque();
+        System.out.println("----------");
+
+        lld1.addLast(2);
+        lld1.printDeque();
+        System.out.println("----------");
+
+        lld1.addLast(3);
+        lld1.printDeque();
+        System.out.println("----------");
+        
+        lld1.get(1);
+        lld1.printDeque();
+        System.out.println("----------");
 	}
 
 	public static void testing123() {

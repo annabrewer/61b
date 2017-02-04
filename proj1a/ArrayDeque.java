@@ -81,6 +81,12 @@ public class ArrayDeque<Item> {
             counter += 1;
         }
         System.out.println();
+        System.out.println("size: " + size);
+
+        for (Item i : items) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
         /*int intndex = nextLast;
         while (index != nextFirst) {
             index += 1;
@@ -94,6 +100,7 @@ public class ArrayDeque<Item> {
     public Item removeFirst() {
         Item x = get(0);
         size -= 1;
+        nextFirst = (nextFirst + 1) % items.length;
         //nextFirst += (nextFirst + 1) % items.length;
         manageStorage();
         return x;
@@ -102,6 +109,7 @@ public class ArrayDeque<Item> {
     public Item removeLast() {
         Item x = get(size - 1);
         size -= 1;
+        nextLast = (nextLast - 1) % items.length;
         manageStorage();
         return x;
         //do not need to actually set last item to 0
@@ -112,7 +120,7 @@ public class ArrayDeque<Item> {
     }
 
     private void manageStorage() {
-        if (items.length >= 16 && ((double)size / items.length) < 0.25) {
+        if (items.length >= 16 && ((double) size / items.length) < 0.25) {
             resize(items.length / 2);
             /*Item[] a = (Item[]) new Object[size/2]; 
             int index = nextLast;
