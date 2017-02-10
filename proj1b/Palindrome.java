@@ -3,11 +3,11 @@
  */
 public class Palindrome {
 
-    public static void main (String[] args) {
+    /*public static void main (String[] args) {
         OffByOne obo = new OffByOne();
         //System.out.println(isPalindrome("detrude", obo));
         //System.out.println(isPalindrome("toohottohoot"));
-    }
+    }*/
 
     public static Deque<Character> wordToDeque(String word) {
         ArrayDequeSolution<Character> deque = new ArrayDequeSolution<Character>();

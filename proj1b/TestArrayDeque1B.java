@@ -10,7 +10,7 @@ public class TestArrayDeque1B {
     @Test
     public void testArrayDeque() {
         StudentArrayDeque<Integer> student = new StudentArrayDeque<Integer>();
-        StudentArrayDeque<Integer> answer = new StudentArrayDeque<Integer>();
+        ArrayDequeSolution<Integer> answer = new ArrayDequeSolution<Integer>();
         int length = 0;
         String message = "";
         for (int  i = 0; i < 1000; i++) {
@@ -19,10 +19,12 @@ public class TestArrayDeque1B {
             if (method < .5) {
                 message += ("addFirst(" + number + ")");
                 student.addFirst(number);
+                answer.addFirst(number);
                 message += "\n";
             } else {
                 message += ("addLast(" + number + ")");
                 student.addLast(number);
+                answer.addLast(number);
                 message += "\n";
             }
         }
@@ -30,12 +32,14 @@ public class TestArrayDeque1B {
             double method = StdRandom.uniform();
             if (method < .5) {
                 message += "removeFirst()";
-                assertEquals(message, student.removeFirst(), answer.removeFirst());
+                assertEquals(message, answer.removeFirst(), student.removeFirst());
                 message += "\n";
 
             } else {
                 message += "removeLast()";
-                assertEquals(message, student.removeLast(), answer.removeLast());
+                //int m = student.removeLast();
+                //int n = answer.removeLast();
+                assertEquals(message, answer.removeFirst(), student.removeFirst());
                 message += "\n";
 
             }
