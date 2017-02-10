@@ -40,7 +40,7 @@ public class TestArrayDeque1B {
 
             }
         }
-        System.out.print(message);
+        //System.out.print(message);
         /*for (int  i = 0; i < 500; i++) {
             if (method == 0) {
                 message += "size()";
