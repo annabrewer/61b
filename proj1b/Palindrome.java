@@ -13,11 +13,9 @@ public class Palindrome {
     public static boolean isPalindrome(String word) {
         if (word.length() <= 1) {
             return true;
-        }
-        else if (word.charAt(word.length()-1) == word.charAt(0)) {
-            return isPalindrome(word.substring(1, word.length()-2));
-        }
-        else {
+        } else if (word.charAt(word.length() - 1) == word.charAt(0)) {
+            return isPalindrome(word.substring(1, word.length() - 2));
+        } else {
             return false;
         }
     }
@@ -25,11 +23,9 @@ public class Palindrome {
     public static boolean isPalindrome(String word, CharacterComparator cc) {
         if (word.length() <= 1) {
             return true;
-        }
-        else if (cc.equalChars(word.charAt(word.length()-1), word.charAt(0))) {
-            return isPalindrome(word.substring(1, word.length()-2));
-        }
-        else {
+        } else if (cc.equalChars(word.charAt(word.length() - 1), word.charAt(0))) {
+            return isPalindrome(word.substring(1, word.length() - 2));
+        } else {
             return false;
         }
     }

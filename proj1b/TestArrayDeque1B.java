@@ -13,46 +13,45 @@ public class TestArrayDeque1B {
         StudentArrayDeque<Integer> answer = new StudentArrayDeque<Integer>();
         int length = 0;
         String message = "";
-        for (int  i = 0; i < 500; i++) {
-            int method = StdRandom.uniform(5);
+        for (int  i = 0; i < 1000; i++) {
+            double method = StdRandom.uniform();
             int number = StdRandom.uniform(9);
-            if (method == 0){
-                message += ("addFirst("+number+")");
-                length += 1;
+            if (method < .5) {
+                message += ("addFirst(" + number + ")");
+                student.addFirst(number);
+                message += "\n";
+            } else {
+                message += ("addLast(" + number + ")");
+                student.addLast(number);
                 message += "\n";
             }
-            else if (method == 1){
-                message += ("addLast("+number+")");
-                length += 1;
+        }
+        for (int  i = 0; i < 1000; i++) {
+            double method = StdRandom.uniform();
+            if (method < .5) {
+                message += "removeFirst()";
+                assertEquals(message, student.removeFirst(), answer.removeFirst());
                 message += "\n";
+
+            } else {
+                message += "removeLast()";
+                assertEquals(message, student.removeLast(), answer.removeLast());
+                message += "\n";
+
             }
-            else if (method == 2){
-                if (length > 0) {
-                    message += "removeFirst()";
-                    assertEquals(message, student.removeFirst(), answer.removeFirst());
-                    length -= 1;
-                    message += "\n";
-                }
-            }
-            else if (method == 3){
-                if (length > 0) {
-                    message += "removeLast()";
-                    assertEquals(message, student.removeLast(), answer.removeLast());
-                    length -= 1;
-                    message += "\n";
-                }
-            }
-            else if(method == 4){
+        }
+        System.out.print(message);
+        /*for (int  i = 0; i < 500; i++) {
+            if (method == 0) {
                 message += "size()";
                 assertEquals(message, student.size(), answer.size());
                 message += "\n";
-            }
-            else if(method == 5){
+            } else if (method == 1) {
                 int index = StdRandom.uniform(length);
                 message += "get()";
                 assertEquals(message, student.get(index), answer.get(index));
                 message += "\n";
             }
-        }
+        }*/
     }
 }
