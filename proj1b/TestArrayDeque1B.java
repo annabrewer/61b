@@ -28,7 +28,7 @@ public class TestArrayDeque1B {
                 message += "\n";
             }
         }
-        for (int  i = 0; i < 1000; i++) {
+        for (int  i = 0; i < 999; i++) {
             double method = StdRandom.uniform();
             if (method < .5) {
                 message += "removeFirst()";
