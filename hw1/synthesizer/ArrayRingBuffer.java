@@ -36,16 +36,13 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
-        if (isEmpty()) {
-            rb[first] = x;
-            fillCount() += 1;
-            first = (first % capacity()) + 1;
-            last -= 1;
-            if (last < 0) {
-                last = capacity() - 1;
-            }
-        } else {
+        Iterator<T> rbIter = iterator();
+        if (! rbIter.hasNext()) {
             throw new RuntimeException("Ring Buffer Overflow");
+        } else {
+            rb[last] = x;
+            this.fillCount += 1;
+            last = (last % (capacity()-1)) + 1;
         }
     }
 
@@ -56,12 +53,13 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     public T dequeue() {
         // TODO: Dequeue the first item. Don't forget to decrease fillCount and update
-        Iterator<T> rbIter = iterator();
         if (isFull()) {
             throw new RuntimeException("Ring Buffer Overflow");
         } else {
-            fillCount() -= 1;
-            return rbIter.next();
+            T rv = rb[first];
+            first = (first % (capacity()-1)) + 1;
+            this.fillCount -= 1;
+            return rv;
         }
     }
 
@@ -82,18 +80,19 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
     private class rbIterator implements Iterator<T> {
+        private int counter;
 
         public rbIterator() {
-            //what do i put here
+            counter = 0;
         }
 
         public boolean hasNext() {
-            return fillCount() != 0;
+            return counter != capacity();
         }
 
         public T next() {
-            T rv = rb[first];
-            first = (first % capacity) + 1;
+            T rv = rb[counter];
+            counter += 1;
             return rv;
         }
     }
