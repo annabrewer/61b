@@ -38,7 +38,7 @@ public class GuitarString {
             n += 1;
         }
         while (n > 0)  {
-            buffer.enqueue(Math.random() - 0.5);
+            buffer.enqueue((Math.random() - 0.5) * DECAY);
             n -= 1;
         }
     }
