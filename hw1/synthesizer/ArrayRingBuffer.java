@@ -36,7 +36,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         } else {
             rb[last] = x;
             this.fillCount += 1;
-            last = ((last + 1) % (capacity()-1));
+            last = ((last + 1) % (capacity() - 1));
         }
     }
 
@@ -64,15 +64,15 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
     public Iterator<T> iterator() {
-        rbIterator rbI = new rbIterator();
+        RbIterator rbI = new RbIterator();
         return rbI;
 
     }
 
-    private class rbIterator implements Iterator<T> {
+    private class RbIterator implements Iterator<T> {
         private int counter;
 
-        public rbIterator() {
+        private RbIterator() {
             counter = 0;
         }
 

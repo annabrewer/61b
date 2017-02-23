@@ -16,7 +16,7 @@ public class GuitarString {
         //       cast the result of this divsion operation into an int. For better
         //       accuracy, use the Math.round() function before casting.
         //       Your buffer should be initially filled with zeros.
-        buffer = new ArrayRingBuffer<Double>((int)(SR/frequency));
+        buffer = new ArrayRingBuffer<Double>((int) (SR / frequency));
         for (int i = 0; i < buffer.capacity(); i++) {
             buffer.enqueue(0.0);
         }
@@ -32,9 +32,14 @@ public class GuitarString {
        /*while (buffer.fillCount() > 0) {
            buffer.dequeue();
        }*/
-        for (int i = 0; i < buffer.capacity(); i++) {
+       int n = 0;
+        while (! buffer.isEmpty()) {
             buffer.dequeue();
-            buffer.enqueue(Math.random() -0.5);
+            n += 1;
+        }
+        while (n > 0)  {
+            buffer.enqueue(Math.random() - 0.5);
+            n += 1;
         }
     }
 
