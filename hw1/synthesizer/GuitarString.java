@@ -32,14 +32,14 @@ public class GuitarString {
        /*while (buffer.fillCount() > 0) {
            buffer.dequeue();
        }*/
-       int n = 0;
-        while (! buffer.isEmpty()) {
+        int n = 0;
+        while (!buffer.isEmpty()) {
             buffer.dequeue();
             n += 1;
         }
         while (n > 0)  {
             buffer.enqueue(Math.random() - 0.5);
-            n += 1;
+            n -= 1;
         }
     }
 
