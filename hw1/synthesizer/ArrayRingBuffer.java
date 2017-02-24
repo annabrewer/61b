@@ -63,8 +63,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     public T peek() {
         if (isEmpty()) {
             throw new RuntimeException("Nothing to see here");
-        }
-        else {
+        } else {
             return rb[first];
         }
     }

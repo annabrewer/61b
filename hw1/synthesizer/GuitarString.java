@@ -40,7 +40,7 @@ public class GuitarString {
         while (n > 0)  {
             double num = (Math.random() - 0.5) * DECAY;
             buffer.enqueue(num);
-            System.out.println(num);
+            //System.out.println(num);
             n -= 1;
         }
     }
