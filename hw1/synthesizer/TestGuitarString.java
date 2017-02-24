@@ -20,7 +20,13 @@ public class TestGuitarString {
     public void testPluckTheAString() {
         double CONCERT_A = 440.0;
         GuitarString aString = new GuitarString(CONCERT_A);
+        for (Object d : aString.buffer) {
+            System.out.println(d);
+        }
         aString.pluck();
+        for (Object d : aString.buffer) {
+            System.out.println(d);
+        }
         for (int i = 0; i < 50000; i += 1) {
             StdAudio.play(aString.sample());
             aString.tic();
@@ -34,6 +40,9 @@ public class TestGuitarString {
         // is an ArrayRingBuffer of length 4. 
         GuitarString s = new GuitarString(11025);
         s.pluck();
+        for (Object d : s.buffer) {
+            System.out.println(d);
+        }
 
         // Record the front four values, ticcing as we go.
         double s1 = s.sample();
