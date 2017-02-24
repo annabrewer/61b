@@ -4,11 +4,13 @@ import java.util.Iterator;
 
 public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
-    private int first;            // index for the next dequeue or peek
+    public int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
-    private int last;
+    public int last;
     /* Array for storing the buffer data. */
     private T[] rb;
+
+    //CHANGE BACK TO PRIVATE DONT FORGET
 
     /**
      * Create a new ArrayRingBuffer with the given capacity.
@@ -22,7 +24,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         rb = (T[]) new Object[capacity];
         this.capacity = capacity;
         first = capacity / 2;
-        last = ((first + 1) % capacity());
+        last = first;
     }
 
     /**
@@ -51,6 +53,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
             throw new RuntimeException("Ring buffer underflow");
         } else {
             T rv = rb[first];
+            rb[first] = null;
             first = ((first + 1) % capacity());
             fillCount -= 1;
             return rv;

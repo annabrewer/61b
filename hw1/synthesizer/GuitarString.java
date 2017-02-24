@@ -17,7 +17,7 @@ public class GuitarString {
         //       accuracy, use the Math.round() function before casting.
         //       Your buffer should be initially filled with zeros.
         buffer = new ArrayRingBuffer<Double>((int) (SR / frequency));
-        for (int i = 0; i < buffer.capacity(); i++) {
+        while (!buffer.isFull()) {
             buffer.enqueue(0.0);
         }
     }
@@ -37,7 +37,7 @@ public class GuitarString {
             buffer.dequeue();
             n += 1;
         }
-        while (n > 0)  {
+        while (!buffer.isFull())  {
             double num = (Math.random() - 0.5) * DECAY;
             buffer.enqueue(num);
             //System.out.println(num);
