@@ -80,14 +80,14 @@ public class Percolation {
         //length = 5;
         //System.out.print(xyTo1D(2, 4)); //should be 14
         //test whether percolation works properly
-        Percolation p = new Percolation(5);
+        Percolation p = new Percolation(20);
         p.open(0, 4);
         if (p.percolates()) {
             System.out.print("oh no");
         } else {
             System.out.print("hell yeah boys");
         }
-        /*for (int i = 1; i < p.length; i++){
+        for (int i = 1; i < p.length; i++){
             p.open(i, 4);
         }
         if (p.percolates()) {
@@ -95,7 +95,7 @@ public class Percolation {
         }
         else{
             System.out.print("oh no");
-        }*/
+        }
     }
 
     //helper

@@ -9,7 +9,7 @@ public class PercolationStats {
 
     public PercolationStats(int N, int T) {
         if (N <= 0 || T <= 0) {
-            throw new IndexOutOfBoundsException();
+            throw new IllegalArgumentException();
         }
         int[] thresholds = new int[T];
         //ArrayList<Integer> thresh = new ArrayList<Integer>();
@@ -28,7 +28,7 @@ public class PercolationStats {
         }
         ratios = new double[T];
         for (int i = 0; i < T; i++) {
-            ratios[i] = (double)thresholds[i] / (N*N);
+            ratios[i] = (double) thresholds[i] / (N * N);
         }
     }   // perform T independent experiments on an N-by-N grid
 
