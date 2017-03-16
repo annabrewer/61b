@@ -5,13 +5,15 @@ import java.util.ArrayList;
 
 public class Percolation {
 
-    private ArrayList<Integer> openSites;
+    //private ArrayList<Integer> openSites;
     private WeightedQuickUnionUF union;
     private WeightedQuickUnionUF unionNB; //no backwash
     private int size;
     private int length;
     private int virtualTop;
     private int virtualBottom;
+    private boolean[][] open;
+    private int openNum;
 
 
     public Percolation(int N) {
@@ -19,7 +21,14 @@ public class Percolation {
         length = N;
         virtualTop = size;
         virtualBottom = size + 1;
-        openSites = new ArrayList<Integer>();
+        openNum = 0;
+        //openSites = new ArrayList<Integer>();
+        open = new boolean[length][length];
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                open[i][j] = false;
+            }
+        }
         union = new WeightedQuickUnionUF(size + 2);
         unionNB = new WeightedQuickUnionUF(size + 1);
         for (int i = 0; i < N; i++) {
@@ -30,48 +39,50 @@ public class Percolation {
     }                // create N-by-N grid, with all sites initially blocked
     public void open(int row, int col) {
         int site = xyTo1D(row, col);
-        if (!openSites.contains(site)) {
-            openSites.add(site);
-            ArrayList<Integer> surrounding = new ArrayList<Integer>();
+        if (!open[row][col]) {
+            open[row][col] = true;
+            ArrayList<int[]> surrounding = new ArrayList<int[]>();
             if (row != 0) {
-                surrounding.add(xyTo1D(row - 1, col));
+                surrounding.add(new int[]{row - 1, col});
             }
             if (row != length - 1) {
-                surrounding.add(xyTo1D(row + 1, col));
+                surrounding.add(new int[]{row + 1, col});
             }
             if (col != 0) {
-                surrounding.add(xyTo1D(row, col - 1));
+                surrounding.add(new int[]{row, col - 1});
             }
             if (col != length - 1) {
-                surrounding.add(xyTo1D(row, col + 1));
+                surrounding.add(new int[]{row, col + 1});
             }
-            for (int i : surrounding) {
-                if (openSites.contains(i)) { //aka isOpen with one argument
-                    union.union(i, site);
-                    unionNB.union(i, site);
+            for (int[] i : surrounding) {
+                if (open[i[0]][i[1]]) { //if its open
+                    int s = xyTo1D(i[0], i[1]);
+                    union.union(s, site);
+                    unionNB.union(s, site);
                 }
             }
+            openNum += 1;
+            open[row][col] = true;
         }
     }       // open the site (row, col) if it is not open already
     public boolean isOpen(int row, int col) {
-        int site = xyTo1D(row, col);
-        return openSites.contains(site);
+        return open[row][col];
     }  // is the site (row, col) open?
 
     public boolean isFull(int row, int col) {
         int site = xyTo1D(row, col);
-        return isOpen(row, col) && unionNB.connected(virtualTop, site);
+        return open[row][col] && unionNB.connected(virtualTop, site);
     }  // is the site (row, col) full?
 
     public int numberOfOpenSites() {
-        return openSites.size();
+        return openNum;
     }           // number of open sites
 
     public boolean percolates() {
         if (size > 1) {
             return union.connected(virtualTop, virtualBottom);
         } else { //edge case - 1x1 grid
-            return openSites.contains(0);
+            return open[0][0];
         }
 
     }              // does the system percolate?
