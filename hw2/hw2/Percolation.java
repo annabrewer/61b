@@ -17,6 +17,9 @@ public class Percolation {
 
 
     public Percolation(int N) {
+        if (N <= 0) {
+            throw new IllegalArgumentException();
+        }
         size = N * N;
         length = N;
         virtualTop = size;
@@ -41,22 +44,39 @@ public class Percolation {
         int site = xyTo1D(row, col);
         if (!open[row][col]) {
             open[row][col] = true;
-            ArrayList<int[]> surrounding = new ArrayList<int[]>();
+            //ArrayList<int[]> surrounding = new ArrayList<int[]>();
             if (row != 0) {
-                surrounding.add(new int[]{row - 1, col});
+                int i = row - 1;
+                int j = col;
+                if (open[i][j]) {
+                    int s = xyTo1D(i, j);
+                    union.union(s, site);
+                    unionNB.union(s, site);
+                }
             }
             if (row != length - 1) {
-                surrounding.add(new int[]{row + 1, col});
+                int i = row + 1;
+                int j = col;
+                if (open[i][j]) {
+                    int s = xyTo1D(i, j);
+                    union.union(s, site);
+                    unionNB.union(s, site);
+                }
             }
             if (col != 0) {
-                surrounding.add(new int[]{row, col - 1});
+                int i = row;
+                int j = col - 1;
+                if (open[i][j]) {
+                    int s = xyTo1D(i, j);
+                    union.union(s, site);
+                    unionNB.union(s, site);
+                }
             }
             if (col != length - 1) {
-                surrounding.add(new int[]{row, col + 1});
-            }
-            for (int[] i : surrounding) {
-                if (open[i[0]][i[1]]) { //if its open
-                    int s = xyTo1D(i[0], i[1]);
+                int i = row;
+                int j = col + 1;
+                if (open[i][j]) {
+                    int s = xyTo1D(i, j);
                     union.union(s, site);
                     unionNB.union(s, site);
                 }
@@ -84,7 +104,6 @@ public class Percolation {
         } else { //edge case - 1x1 grid
             return open[0][0];
         }
-
     }              // does the system percolate?
 
     public static void main(String[] args) {
@@ -98,13 +117,12 @@ public class Percolation {
         } else {
             System.out.print("hell yeah boys");
         }
-        for (int i = 1; i < p.length; i++){
+        for (int i = 1; i < p.length; i++) {
             p.open(i, 4);
         }
         if (p.percolates()) {
             System.out.print("hell yeah");
-        }
-        else{
+        } else {
             System.out.print("oh no");
         }
     }
