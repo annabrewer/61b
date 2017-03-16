@@ -213,6 +213,10 @@ public class IntList {
                 return cnt;
         }
     }
+    
+    public static IntList reverse(IntList A) {
+        return null;
+    }
 
     @Override
     /** Outputs the IntList as a String. You are not expected to read
