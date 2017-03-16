@@ -16,8 +16,8 @@ public class PercolationStats {
             int thresh = 0;
             while(!p.percolates()){
                 thresh += 1;
-                int r = (int)StdRandom.uniform()*N;
-                int c = (int)StdRandom.uniform()*N;
+                int r = (int)(StdRandom.uniform()*N);
+                int c = (int)(StdRandom.uniform()*N);
                 p.open(r, c);
             }
             thresholds[i] = thresh;
@@ -46,6 +46,18 @@ public class PercolationStats {
         double T = thresholds.length;
         return threshEstimate + ((1.96 * sharpness) / Math.sqrt(T));
     }
+
+    /*public static void main(String[] args) {
+        for (int i = 0; i<20;i++){
+            System.out.println((int)(StdRandom.uniform()*5));
+        }
+        PercolationStats ps = new PercolationStats(5, 30);
+
+        System.out.println(ps.mean());
+        System.out.println(ps.stddev());
+        System.out.println(ps.confidenceLow());
+        System.out.println(ps.confidenceHigh());
+    }*/
 
     //helper
     /*public double thingamajig() { //1.96o/sqrt(T)

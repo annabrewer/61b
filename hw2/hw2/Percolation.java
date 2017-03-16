@@ -8,8 +8,8 @@ public class Percolation {
     public ArrayList<Integer> openSites;
     public WeightedQuickUnionUF union;
     public WeightedQuickUnionUF unionNB; //no backwash
-    public static int size;
-    public static int length;
+    public int size;
+    public int length;
     public int virtualTop;
     public int virtualBottom;
 
@@ -68,7 +68,13 @@ public class Percolation {
     }           // number of open sites
 
     public boolean percolates(){
-        return union.connected(virtualTop, virtualBottom);
+        if(size > 1){
+            return union.connected(virtualTop, virtualBottom);
+        }
+        else { //edge case - 1x1 grid
+            return openSites.contains(0);
+        }
+
     }              // does the system percolate?
 
     public static void main(String[] args){
@@ -95,7 +101,7 @@ public class Percolation {
     }
 
     //helper
-    public static int xyTo1D(int r, int c){
+    public int xyTo1D(int r, int c){
         int result = length * (r); //not r-1 because rows start at 0
         result += (c); //not c+1 because cols start at 0
         return result;
