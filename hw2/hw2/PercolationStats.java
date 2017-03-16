@@ -9,16 +9,18 @@ public class PercolationStats {
     public int[] thresholds;
 
     public PercolationStats(int N, int T){
-        Percolation p = new Percolation(N);
         thresholds = new int[T];
         //ArrayList<Integer> thresh = new ArrayList<Integer>();
         for(int i = 0; i < T; i++){
+            Percolation p = new Percolation(N);
             int thresh = 0;
             while(!p.percolates()){
-                thresh += 1;
                 int r = (int)(StdRandom.uniform()*N);
                 int c = (int)(StdRandom.uniform()*N);
-                p.open(r, c);
+                if(!p.isOpen(r, c)){
+                    p.open(r, c);
+                    thresh += 1;
+                }
             }
             thresholds[i] = thresh;
         }
@@ -47,17 +49,17 @@ public class PercolationStats {
         return threshEstimate + ((1.96 * sharpness) / Math.sqrt(T));
     }
 
-    /*public static void main(String[] args) {
-        for (int i = 0; i<20;i++){
+    public static void main(String[] args) {
+        /*for (int i = 0; i<20;i++){
             System.out.println((int)(StdRandom.uniform()*5));
-        }
+        }*/
         PercolationStats ps = new PercolationStats(5, 30);
 
         System.out.println(ps.mean());
         System.out.println(ps.stddev());
         System.out.println(ps.confidenceLow());
         System.out.println(ps.confidenceHigh());
-    }*/
+    }
 
     //helper
     /*public double thingamajig() { //1.96o/sqrt(T)
