@@ -1,51 +1,57 @@
 package hw2;
 
-import java.util.ArrayList;
 import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 
 public class PercolationStats {
 
-    public int[] thresholds;
+    private double[] ratios;
 
-    public PercolationStats(int N, int T){
-        thresholds = new int[T];
+    public PercolationStats(int N, int T) {
+        if (N <= 0 || T <= 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        int[] thresholds = new int[T];
         //ArrayList<Integer> thresh = new ArrayList<Integer>();
-        for(int i = 0; i < T; i++){
+        for (int i = 0; i < T; i++) {
             Percolation p = new Percolation(N);
             int thresh = 0;
-            while(!p.percolates()){
-                int r = (int)(StdRandom.uniform()*N);
-                int c = (int)(StdRandom.uniform()*N);
-                if(!p.isOpen(r, c)){
+            while (!p.percolates()) {
+                int r = (int) (StdRandom.uniform() * N);
+                int c = (int) (StdRandom.uniform() * N);
+                if (!p.isOpen(r, c)) {
                     p.open(r, c);
                     thresh += 1;
                 }
             }
             thresholds[i] = thresh;
         }
+        ratios = new double[T];
+        for (int i = 0; i < T; i++) {
+            ratios[i] = (double)thresholds[i] / (N*N);
+        }
     }   // perform T independent experiments on an N-by-N grid
 
-    public double mean(){
-        return StdStats.mean(thresholds);
+    public double mean() {
+        return StdStats.mean(ratios);
     }                    // sample mean of percolation threshold
 
-    public double stddev(){
-        return StdStats.stddev(thresholds);
+    public double stddev() {
+        return StdStats.stddev(ratios);
     }                  // sample standard deviation of percolation threshold
 
-    public double confidenceLow(){
+    public double confidenceLow() {
         double threshEstimate = mean();
         double sharpness = stddev();
-        double T = thresholds.length;
+        double T = ratios.length;
         return threshEstimate - ((1.96 * sharpness) / Math.sqrt(T));
 
     }           // low  endpoint of 95% confidence interval
 
-    public double confidenceHigh(){
+    public double confidenceHigh() {
         double threshEstimate = mean();
         double sharpness = stddev();
-        double T = thresholds.length;
+        double T = ratios.length;
         return threshEstimate + ((1.96 * sharpness) / Math.sqrt(T));
     }
 
