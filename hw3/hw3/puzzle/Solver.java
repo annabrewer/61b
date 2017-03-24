@@ -2,6 +2,7 @@ package hw3.puzzle;
 
 import edu.princeton.cs.algs4.MinPQ;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Anna on 3/23/17.
@@ -40,6 +41,7 @@ public class Solver {
             solution.add(curr.worldState);
             curr = curr.prevNode;
         }
+        Collections.reverse(solution);
     }
 
     public int moves() {
