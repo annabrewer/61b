@@ -18,7 +18,7 @@ public class Solver {
         SearchNode initialNode = new SearchNode(initial, 0, null);
         queue.insert(initialNode);
         SearchNode curr = queue.delMin();
-        moves = 0;
+        moves = -1;
         while (!curr.worldState.isGoal()){
             for (WorldState neighbor : curr.worldState.neighbors()) {
                 SearchNode sn = new SearchNode(neighbor, moves, curr);

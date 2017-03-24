@@ -91,13 +91,14 @@ public class Board implements WorldState {
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
                 int num = board[i][j];
-                if (num != 0) {
-                    horiz = len - i;
-                    vert = len - j;
+                if (num == 0) {
+                    horiz = (len - 1) - i;
+                    vert = (len - 1) - j;
+                    result += horiz + vert;
                 }
                 else {
-                    vert = Math.abs(j - ((num-1)/len)); //floor div
-                    horiz = Math.abs(i - ((num-1)%len));
+                    vert = Math.abs(i - ((num-1)/len)); //floor div
+                    horiz = Math.abs(j - ((num-1)%len));
                     result += horiz + vert;
                 }
             }
