@@ -113,8 +113,11 @@ public class Board implements WorldState {
 
     @Override
     public boolean equals(Object y) {
-        if (y != null) {
+        /*if (y != null) {
             return Arrays.deepEquals(((Board) y).board, board);
+        }*/
+        if (y != null) {
+            return y.toString().equals(this.toString());
         }
         return false;
     }
