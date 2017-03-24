@@ -2,8 +2,6 @@ package hw3.puzzle;
 
 import edu.princeton.cs.algs4.Queue;
 
-import java.util.Arrays;
-
 public class Board implements WorldState {
 
     /** Returns the string representation of the board. 
@@ -113,13 +111,25 @@ public class Board implements WorldState {
 
     @Override
     public boolean equals(Object y) {
+
+        if (! y instanceof Board) {
+            return false;
+        }
+        if (y == null) {
+            return false;
+        }
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len; j++) {
+                if((((Board) y).tileAt(i, j)) == board[i][j]) {
+                    return true;
+                }
+                return false;
+            }
+        }
         /*if (y != null) {
             return Arrays.deepEquals(((Board) y).board, board);
         }*/
-        if (y != null) {
-            return y.toString().equals(this.toString());
-        }
-        return false;
+        return y.toString().equals(this.toString());
     }
 
     @Override
