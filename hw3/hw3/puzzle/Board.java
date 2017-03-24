@@ -115,7 +115,10 @@ public class Board implements WorldState {
         if (!(y instanceof Board)) {
             return false;
         }
-        if (y == null) {
+        /*if (y null) {
+            return false;
+        }*/
+        if (((Board) y).size() != size()) {
             return false;
         }
         for (int i = 0; i < len; i++) {
