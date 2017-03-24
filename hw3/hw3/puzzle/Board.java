@@ -112,7 +112,7 @@ public class Board implements WorldState {
     @Override
     public boolean equals(Object y) {
 
-        if (! y instanceof Board) {
+        if (!(y instanceof Board)) {
             return false;
         }
         if (y == null) {
@@ -120,7 +120,7 @@ public class Board implements WorldState {
         }
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
-                if((((Board) y).tileAt(i, j)) == board[i][j]) {
+                if ((((Board) y).tileAt(i, j)) == board[i][j]) {
                     return true;
                 }
                 return false;
