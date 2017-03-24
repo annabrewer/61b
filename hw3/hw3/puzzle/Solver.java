@@ -20,7 +20,7 @@ public class Solver {
         moves = -1;
         while (!curr.worldState.isGoal()) {
             for (WorldState neighbor : curr.worldState.neighbors()) {
-                SearchNode sn = new SearchNode(neighbor, moves, curr);
+                SearchNode sn = new SearchNode(neighbor, curr.numMoves + 1, curr);
                 if (curr.prevNode == null) {
                     queue.insert(sn);
                 } else if (!sn.worldState.equals(curr.prevNode.worldState)) {

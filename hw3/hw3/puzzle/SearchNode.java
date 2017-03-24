@@ -30,5 +30,4 @@ public class SearchNode implements Comparable<SearchNode> {
         //PQ should return least element first
         //if this is wrong, cam subtract from 0
     }
-
 }
