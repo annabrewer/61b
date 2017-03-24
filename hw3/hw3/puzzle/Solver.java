@@ -1,8 +1,6 @@
 package hw3.puzzle;
 
 import edu.princeton.cs.algs4.MinPQ;
-import edu.princeton.cs.algs4.StdIn;
-import java.util.Iterator;
 import java.util.ArrayList;
 
 /**
@@ -13,26 +11,24 @@ public class Solver {
     int moves;
     ArrayList<WorldState> solution;
 
-    public Solver (WorldState initial) {
+    public Solver(WorldState initial) {
         queue = new MinPQ<SearchNode>();
         SearchNode initialNode = new SearchNode(initial, 0, null);
         queue.insert(initialNode);
         SearchNode curr = queue.delMin();
         moves = -1;
-        while (!curr.worldState.isGoal()){
+        while (!curr.worldState.isGoal()) {
             for (WorldState neighbor : curr.worldState.neighbors()) {
                 SearchNode sn = new SearchNode(neighbor, moves, curr);
                 if (curr.prevNode == null) {
                     queue.insert(sn);
-                }
-                else if (!sn.worldState.equals(curr.prevNode.worldState)) {
+                } else if (!sn.worldState.equals(curr.prevNode.worldState)) {
                     queue.insert(sn);
                 }
             }
             if (queue.size() != 0) {
                 curr = queue.delMin();
-            }
-            else {
+            } else {
                 System.out.println("Why is this happening");
                 break;
                 //break;
@@ -46,7 +42,7 @@ public class Solver {
         }
     }
 
-    public int moves(){
+    public int moves() {
         return moves;
     }
 

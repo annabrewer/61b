@@ -15,15 +15,14 @@ public class Board implements WorldState {
     public Board(int[][] tiles) {
         len = tiles.length;
         board = new int[len][len];
-        for(int i = 0; i < len; i++)
-        {
+        for (int i = 0; i < len; i++) {
             int[] row = tiles[i];
             System.arraycopy(tiles[i], 0, board[i], 0, len);
         }
 
     }
     public int tileAt(int i, int j) {
-        int max = len+1;
+        int max = len + 1;
         if (!(0 <= j && j < max && 0 <= i && i < max)) {
             throw new IndexOutOfBoundsException();
             //System.out.println("hi");
@@ -75,7 +74,7 @@ public class Board implements WorldState {
         int index = 0;
         for (int[] i : board) {
             for (int j : i) {
-                if (j != index + 1) {
+                if (j != index + 1 && j != 0) {
                     result += 1;
                 }
                 index += 1;
@@ -91,14 +90,12 @@ public class Board implements WorldState {
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
                 int num = board[i][j];
-                if (num == 0) {
-                    horiz = (len - 1) - i;
+                if (num != 0) {
+                    /*horiz = (len - 1) - i;
                     vert = (len - 1) - j;
-                    result += horiz + vert;
-                }
-                else {
-                    vert = Math.abs(i - ((num-1)/len)); //floor div
-                    horiz = Math.abs(j - ((num-1)%len));
+                    result += horiz + vert;*/
+                    vert = Math.abs(i - ((num - 1) / len)); //floor div
+                    horiz = Math.abs(j - ((num - 1) % len));
                     result += horiz + vert;
                 }
             }
@@ -114,11 +111,17 @@ public class Board implements WorldState {
         return estimatedDistanceToGoal() == 0;
     }
 
+    @Override
     public boolean equals(Object y) {
         if (y != null) {
-            return Arrays.deepEquals(((Board)y).board, board);
+            return Arrays.deepEquals(((Board) y).board, board);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0; //dont need this
     }
 
     public String toString() {
@@ -127,7 +130,7 @@ public class Board implements WorldState {
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
