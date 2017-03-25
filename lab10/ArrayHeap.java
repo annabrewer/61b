@@ -110,10 +110,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             double a = contents[index].priority();
             double b = contents[parentIndex(index)].priority();
             if (a < b) {
-                Node temp = contents[parentIndex(index)];
-                contents[parentIndex(index)] = contents[index];
-                contents[index] = temp;
 
+                /*Node temp = contents[parentIndex(index)];
+                contents[parentIndex(index)] = contents[index];
+                contents[index] = temp;*/
+                swap(parentIndex(index), index);
             }
             index = index / 2;
         }
@@ -131,9 +132,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         while (index < size && leftIndex(index) <= size && rightIndex(index) <= size ) {
             int ind = (int) Math.min(contents[leftIndex(index)].priority(), contents[rightIndex(index)].priority());
             if (contents[index].priority() > contents[leftIndex(index)].priority() || contents[index].priority() > contents[rightIndex(index)].priority()) {
-                Node temp = contents[ind];
+                /*Node temp = contents[ind];
                 contents[ind] = contents[index];
-                contents[index] = temp;
+                contents[index] = temp;*/
+                swap(ind, index);
             }
             index = (int) ind;
         }
@@ -180,6 +182,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         Node temp2 = contents[1];
         contents[size] = contents[1];
         contents[size] = null;
+        size -= 1;
         contents[1] = temp;
         sink(1);
         return temp2.item();
