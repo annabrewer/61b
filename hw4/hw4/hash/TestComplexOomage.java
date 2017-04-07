@@ -4,6 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TestComplexOomage {
@@ -40,7 +41,11 @@ public class TestComplexOomage {
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new ArrayList<>();
 
-        // Your code here.
+        int N = 10000;
+
+        for (int i = 0; i < N; i += 1) {
+            deadlyList.add(new ComplexOomage(new ArrayList<>(Arrays.asList(253, 253, 253))));
+        }
 
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }
