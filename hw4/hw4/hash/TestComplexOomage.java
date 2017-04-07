@@ -44,9 +44,9 @@ public class TestComplexOomage {
         int N = 10000;
 
         for (int i = 0; i < N; i += 1) {
-            int r = 253 + (int)(Math.random()*3);
-            int g = 253 + (int)(Math.random()*3);
-            int b = 253 + (int)(Math.random()*3);
+            int r = 253; //+ (int)(Math.random()*3);
+            int g = 253; //+ (int)(Math.random()*3);
+            int b = 253; //+ (int)(Math.random()*3);
             deadlyList.add(new ComplexOomage(new ArrayList<>(Arrays.asList(r, g, b))));
         }
 
