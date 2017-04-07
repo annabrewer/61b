@@ -22,10 +22,29 @@ public class TestSimpleOomage {
 
     @Test
     public void testHashCodePerfect() {
-        /* TODO: Write a test that ensures the hashCode is perfect,
-          meaning no two SimpleOomages should EVER have the same
-          hashCode!
-         */
+        HashSet h = new HashSet();
+        for (int r = 0; r <= 255; r += 5) {
+            for (int g = 0; g <= 255; g += 5) {
+                for (int b = 0; b <= 255; b += 5) {
+                    SimpleOomage so = new SimpleOomage(r, g, b);
+                    int hashCode = so.hashCode();
+                    /*for (int r2 = 0; r2 <= 255; r2 += 5) {
+                        for (int g2 = 0; g2 <= 255; g2 += 5) {
+                            for (int b2 = 0; b2 <= 255; b2 += 5) {
+                                SimpleOomage so2 = new SimpleOomage(r2, g2, b2);
+                                int hC = so2.hashCode();
+
+                                if (!(r == r2 && g == g2 && b == b2)) {
+
+                                }
+                            }
+                        }
+                    }*/
+                    h.add(hashCode);
+                }
+            }
+        }
+        assertEquals(h.size(), 52*52*52);
     }
 
     @Test
@@ -48,9 +67,7 @@ public class TestSimpleOomage {
         assertTrue(hashSet.contains(ooA2));
     }
 
-    /* TODO: Once you've finished haveNiceHashCodeSpread,
-    in OomageTestUtility, uncomment this test. */
-    /*@Test
+    @Test
     public void testRandomOomagesHashCodeSpread() {
         List<Oomage> oomages = new ArrayList<>();
         int N = 10000;
@@ -59,8 +76,8 @@ public class TestSimpleOomage {
             oomages.add(SimpleOomage.randomSimpleOomage());
         }
 
-        assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
-    }*/
+        assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 8));
+    }
 
     /** Calls tests for SimpleOomage. */
     public static void main(String[] args) {
