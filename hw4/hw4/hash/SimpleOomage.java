@@ -38,7 +38,7 @@ public class SimpleOomage implements Oomage {
             return red + green + blue;
         } else {
             //System.out.println(red * 1000000 + green * 1000 + blue);
-            return red * 1000000 + green * 1000 + blue;
+            return red/5 * 100 + green/5 * 10 + blue/5;
         }
     }
 
