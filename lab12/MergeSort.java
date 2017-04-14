@@ -90,8 +90,10 @@ public class MergeSort {
                 result = mergeSortedQueues(result, qq.dequeue());
             }
 
-        } else {
+        } else if (qq.size() == 1){
             result = qq.dequeue();
+        } else {
+            return items;
         }
         return result;
     }
