@@ -85,13 +85,13 @@ public class MergeSort {
         Queue<Queue<Item>> qq = new Queue<Queue<Item>>();
         qq = MergeSort.makeSingleItemQueues(items);
         result = mergeSortedQueues(qq.dequeue(), qq.dequeue());
-        while(qq.size() > 0) {
+        while (qq.size() > 0) {
             result = mergeSortedQueues(result, qq.dequeue());
         }
         return result;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Queue<Integer> students = new Queue<Integer>();
         students.enqueue(5);
         students.enqueue(3);
