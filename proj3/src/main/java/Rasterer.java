@@ -62,13 +62,14 @@ public class Rasterer {
 
         getImages(q, queryBox, windowLDP, params.get("w"));
 
-        TreeMap<Double, ArrayList<String>> s = new TreeMap<>();
+        TreeMap<Double, ArrayList<QuadTree>> s = new TreeMap<>();
 
         for (QuadTree t : arrList) {
             if(!s.containsKey(t.ullon)) {
-                s.put(t.ullon, new ArrayList<String>());
+                s.put(t.ullon, new ArrayList<QuadTree>());
             }
-            s.get(t.ullon).add(imgr+t.filename+".png");
+            s.get(t.ullon).add(t);
+            //(imgr+t.filename+".png");
         }
 
         int lenRow = s.size();
@@ -76,25 +77,37 @@ public class Rasterer {
 
         String[][] arr = new String[numRows][lenRow];
 
+        //double ulat = 0;
+        //double llat = 0;
+
+        //ArrayList<QuadTree> hmm = ;
+        double ulat = s.get(s.firstKey()).get(0).ullat;
+        double llat = s.get(s.lastKey()).get(numRows - 1).lrlat;
+        double llon = s.get(s.lastKey()).get(numRows - 1).lrlon;
+
         for (int j = 0; j < numRows; j++) {
             String[] a = new String[lenRow];
             int index = 0;
             double k = s.firstKey();
-            a[index] = s.get(k).remove(0);
+
+            QuadTree thing = s.get(k).remove(0); //gets first element of each arraylist
+            a[index] = (imgr+thing.filename+".png");
+
             while (s.higherKey(k) != null) {
                 k = s.higherKey(k);
                 index += 1;
-                a[index] = s.get(k).remove(0); //gets first element of each arraylist
+                QuadTree thing2 = s.get(k).remove(0); //gets first element of each arraylist
+                a[index] = (imgr+thing2.filename+".png");
             }
             arr[j] = a;
         }
 
         Map<String, Object> results = new HashMap<>();
         results.put("render_grid", arr);
-        results.put("raster_ul_lon", queryBox[0]);
-        results.put("raster_ul_lat", queryBox[1]);
-        results.put("raster_lr_lon", queryBox[2]);
-        results.put("raster_lr_lat", queryBox[3]);
+        results.put("raster_ul_lon", s.firstKey());
+        results.put("raster_ul_lat", ulat);
+        results.put("raster_lr_lon", llon);
+        results.put("raster_lr_lat", llat);
         //string could be "1234.png" - > depth is length - ".png" = length - 4;
         System.out.println(arr[0][0]);
         results.put("depth", arr[0][0].length() - 8);
