@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * This class provides all code necessary to take a query box and produce
@@ -48,15 +51,17 @@ public class Rasterer {
      *                    string. <br>
      * "query_success" -> Boolean, whether the query was able to successfully complete. Don't
      *                    forget to set this to true! <br>
-     * @see #REQUIRED_RASTER_REQUEST_PARAMS
+     * //@see #REQUIRED_RASTER_REQUEST_PARAMS
      */
     public Map<String, Object> getMapRaster(Map<String, Double> params) {
 
         //System.out.println(getIndex("141"));
 
         arrList = new ArrayList<>();
-        double[] queryBox = {params.get("ullon"), params.get("ullat"), params.get("lrlon"), params.get("lrlat")};
-        q = new QuadTree(MapServer.ROOT_ULLON, MapServer.ROOT_ULLAT, MapServer.ROOT_LRLON, MapServer.ROOT_LRLAT, "root");
+        double[] queryBox = {params.get("ullon"), params.get("ullat"),
+                params.get("lrlon"), params.get("lrlat")};
+        q = new QuadTree(MapServer.ROOT_ULLON, MapServer.ROOT_ULLAT,
+                MapServer.ROOT_LRLON, MapServer.ROOT_LRLAT, "root");
         //q = new QuadTree(0.0, 8.0, 8.0, 0.0, "root");
         double windowLDP = Math.abs((params.get("lrlon") - params.get("ullon")) / params.get("w"));
 
@@ -65,7 +70,7 @@ public class Rasterer {
         TreeMap<Double, ArrayList<QuadTree>> s = new TreeMap<>();
 
         for (QuadTree t : arrList) {
-            if(!s.containsKey(t.ullon)) {
+            if (!s.containsKey(t.ullon)) {
                 s.put(t.ullon, new ArrayList<QuadTree>());
             }
             s.get(t.ullon).add(t);
@@ -91,13 +96,13 @@ public class Rasterer {
             double k = s.firstKey();
 
             QuadTree thing = s.get(k).remove(0); //gets first element of each arraylist
-            a[index] = (imgr+thing.filename+".png");
+            a[index] = (imgr + thing.filename + ".png");
 
             while (s.higherKey(k) != null) {
                 k = s.higherKey(k);
                 index += 1;
                 QuadTree thing2 = s.get(k).remove(0); //gets first element of each arraylist
-                a[index] = (imgr+thing2.filename+".png");
+                a[index] = (imgr + thing2.filename + ".png");
             }
             arr[j] = a;
         }
@@ -116,13 +121,13 @@ public class Rasterer {
     }
 
     //helper
-    public void getImages (QuadTree q, double[] queryBox, double ldp, double w) {
-        if (intersectsQueryBox(q, queryBox)) {
-            if (lonDPPsmallerOrIsLeaf(q, ldp, w)) {
-                arrList.add(q);
+    public void getImages(QuadTree qtr, double[] queryBox, double ldp, double w) {
+        if (intersectsQueryBox(qtr, queryBox)) {
+            if (lonDPPsmallerOrIsLeaf(qtr, ldp, w)) {
+                arrList.add(qtr);
                 //return;
             } else {
-                for (QuadTree qtree : q.children) { //should "short-circuit" kinda
+                for (QuadTree qtree : qtr.children) { //should "short-circuit" kinda
                     getImages(qtree, queryBox, ldp, w);
                 }
             }
@@ -130,9 +135,9 @@ public class Rasterer {
     }
 
     //helper
-    public boolean intersectsQueryBox(QuadTree q, double[] queryBox) {
-        if (q.ullon <= queryBox[2] && q.lrlon >= queryBox[0]) {
-            if (q.ullat >= queryBox[3] && q.lrlat <= queryBox[1]) {
+    public boolean intersectsQueryBox(QuadTree qutr, double[] queryBox) {
+        if (qutr.ullon <= queryBox[2] && qutr.lrlon >= queryBox[0]) {
+            if (qutr.ullat >= queryBox[3] && qutr.lrlat <= queryBox[1]) {
                 return true;
             }
         }
@@ -146,56 +151,5 @@ public class Rasterer {
         }
         return false;
     }
-
-    /*String upperLeft = arrList.get(i).filename;
-        //should put arrList.get(i) at upper right corner
-        while (arrList.get(i).lrlon < params.get("lrlon")) {
-            i += 1;
-        }
-        String upperRight = arrList.get(i).filename;
-        int leftIndex = getIndex(upperLeft);
-        int rightIndex = getIndex(upperRight);
-        int lenRow = rightIndex - leftIndex;
-        int numRows = arrList.size() / lenRow;*/
-
-    /*public int getIndex(String s) {
-        int n = Integer.parseInt(s);
-        int index = 0;
-        int sideLength = 1;
-        int finalLength = (int) Math.pow(2, s.length());
-        int digit = 0;
-        int nextDigit = 0;
-        while (sideLength < finalLength) {
-            digit = n % 10;
-            nextDigit = (n % 100) / 10;
-            index += (Math.pow(sideLength, 2)) * (digit - 1);
-            if (nextDigit % 2 != 0) {
-                index += (Math.pow(sideLength, 2)) * 2;
-            }
-            n = n / 10;
-            sideLength = sideLength * 2;
-        }
-        return index;
-    }*/
-    /*public void getAllTiles(QuadTree q, double[] qb, String[][] arr) {
-        ArrayList<ArrayList<String>> temp = new ArrayList<>();
-        int l = q.filename.length();
-        int b = Integer.parseInt(q.filename.charAt(0)); //beginning
-        int c = Integer.parseInt(q.filename.charAt(1))
-        for (int i = b; i < 4; i++) {
-            ArrayList<String> row = new ArrayList<>();
-            for ()
-        }
-    }*/
-
-    /*String[][] arr = {{"img/2143411.png", "img/2143412.png", "img/2143421.png"}, {"img/2143413.png", "img/2143414.png", "img/2143423.png"}, {"img/2143431.png", "img/2143432.png", "img/2143441.png" }};
-
-        results.put("render_grid", arr);
-        results.put("raster_ul_lon", -122.24212646484375);
-        results.put("raster_ul_lat", 37.87701580361881);
-        results.put("raster_lr_lon", -122.24006652832031);
-        results.put("raster_lr_lat", 37.87538940251607);
-        results.put("depth", 7);
-        results.put("query_success", true);*/
 
 }
