@@ -114,7 +114,7 @@ public class Rasterer {
         results.put("raster_lr_lon", llon);
         results.put("raster_lr_lat", llat);
         //string could be "1234.png" - > depth is length - ".png" = length - 4;
-        System.out.println(arr[0][0]);
+        //System.out.println(arr[0][0]);
         results.put("depth", arr[0][0].length() - 8);
         results.put("query_success", true);
         return results;
