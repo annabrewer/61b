@@ -41,7 +41,6 @@ public class GraphDB {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
-
         clean();
     }
 
@@ -64,13 +63,13 @@ public class GraphDB {
         while(itr.hasNext()) {
             long v = itr.next()
         }*/
-        HashMap<Long, Node> temp = new HashMap<>();
+        HashMap<Long, Node> thing = new HashMap<>();
         for (long v : nodes.keySet()) {
             if (!nodes.get(v).adjacent.isEmpty()) {
-                temp.put(v, nodes.get(v));
+                thing.put(v, nodes.get(v));
             }
         }
-        nodes = temp;
+        nodes = thing;
     }
 
     /** Returns an iterable of all vertex IDs in the graph. */
@@ -96,10 +95,12 @@ public class GraphDB {
     long closest(double lon, double lat) {
         Node temp = new Node(0L, lat, lon);
         long vert = 0L;
-        nodes.put(vert, temp);
 
         Iterator<Long> i = nodes.keySet().iterator();
         Long randKey = i.next();
+
+        nodes.put(vert, temp);
+
         double dist = distance(0L, randKey);
 
         for (long v : nodes.keySet()) {
