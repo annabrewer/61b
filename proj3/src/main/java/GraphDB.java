@@ -6,6 +6,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Graph for storing all of the intersection (vertex) and road (edge) information.
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 public class GraphDB {
     /** Your instance variables for storing the graph. You should consider
      * creating helper classes, e.g. Node, Edge, etc. */
+    //public ArrayList<Edge> edges
+    public HashMap<Long, Node> nodes;
 
     /**
      * Example constructor shows how to create and start an XML parser.
@@ -26,7 +30,9 @@ public class GraphDB {
      * @param dbPath Path to the XML file to be parsed.
      */
     public GraphDB(String dbPath) {
+
         try {
+            nodes = new HashMap<>();
             File inputFile = new File(dbPath);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
@@ -35,6 +41,7 @@ public class GraphDB {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
+
         clean();
     }
 
@@ -53,38 +60,79 @@ public class GraphDB {
      *  we can reasonably assume this since typically roads are connected.
      */
     private void clean() {
-
+        /*Iterator<long> itr = nodes.keySet().iterator();
+        while(itr.hasNext()) {
+            long v = itr.next()
+        }*/
+        HashMap<Long, Node> temp = new HashMap<>();
+        for (long v : nodes.keySet()) {
+            if (!nodes.get(v).adjacent.isEmpty()) {
+                temp.put(v, nodes.get(v));
+            }
+        }
+        nodes = temp;
     }
 
     /** Returns an iterable of all vertex IDs in the graph. */
     Iterable<Long> vertices() {
         //YOUR CODE HERE, this currently returns only an empty list.
-        return new ArrayList<Long>();
+        return nodes.keySet();
     }
 
     /** Returns ids of all vertices adjacent to v. */
     Iterable<Long> adjacent(long v) {
-        return null;
+        return nodes.get(v).adjacent.keySet();
     }
 
     /** Returns the Euclidean distance between vertices v and w, where Euclidean distance
      *  is defined as sqrt( (lonV - lonV)^2 + (latV - latV)^2 ). */
     double distance(long v, long w) {
-        return 0;
+        Node nv = nodes.get(v);
+        Node nw = nodes.get(w);
+        return Math.sqrt(Math.pow((nv.lon - nw.lon), 2) + Math.pow((nv.lat - nw.lat), 2));
     }
 
     /** Returns the vertex id closest to the given longitude and latitude. */
     long closest(double lon, double lat) {
-        return 0;
+        Node temp = new Node(0L, lat, lon);
+        long vert = 0L;
+        nodes.put(vert, temp);
+
+        Iterator<Long> i = nodes.keySet().iterator();
+        Long randKey = i.next();
+        double dist = distance(0L, randKey);
+
+        for (long v : nodes.keySet()) {
+            if (v != 0L) {
+                if (distance(v, 0L) < dist) {
+                    dist = (distance(v, 0L));
+                    vert = v;
+                }
+            }
+        }
+        nodes.remove(0L);
+        return vert;
     }
 
     /** Longitude of vertex v. */
     double lon(long v) {
-        return 0;
+        return nodes.get(v).lon;
     }
 
     /** Latitude of vertex v. */
     double lat(long v) {
-        return 0;
+        return nodes.get(v).lat;
     }
+
+    /*addNode (){
+
+    }
+
+    addEdge {
+
+    }
+
+    addWay {
+
+    }*/
 }
