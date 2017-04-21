@@ -19,6 +19,8 @@ public class Rasterer {
     /** imgRoot is the name of the directory containing the images.
      *  You may not actually need this for your class. */
     public Rasterer(String imgRoot) {
+        q = new QuadTree(MapServer.ROOT_ULLON, MapServer.ROOT_ULLAT,
+                MapServer.ROOT_LRLON, MapServer.ROOT_LRLAT, "root");
         imgr = imgRoot; //need this?
     }
 
@@ -60,8 +62,6 @@ public class Rasterer {
         arrList = new ArrayList<>();
         double[] queryBox = {params.get("ullon"), params.get("ullat"),
                 params.get("lrlon"), params.get("lrlat")};
-        q = new QuadTree(MapServer.ROOT_ULLON, MapServer.ROOT_ULLAT,
-                MapServer.ROOT_LRLON, MapServer.ROOT_LRLAT, "root");
         //q = new QuadTree(0.0, 8.0, 8.0, 0.0, "root");
         double windowLDP = Math.abs((params.get("lrlon") - params.get("ullon")) / params.get("w"));
 

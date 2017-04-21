@@ -70,7 +70,8 @@ public class Router {
             for (Long l : s) {
                 if (!visited.contains(l)) {
                     SearchNode sn = new SearchNode(l, g.distance(startKey, l), curr, g, destKey);
-                    if (g.distance(startKey, l) < curr.totalDistance() + g.distance(l, curr.index())) {
+                    if (g.distance(startKey, l) < curr.totalDistance()
+                            + g.distance(l, curr.index())) {
                         sn.setTotalDistance(curr.totalDistance() + g.distance(l, curr.index()));
                     }
                     queue.add(sn);
