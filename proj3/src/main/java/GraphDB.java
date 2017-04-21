@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -22,7 +21,11 @@ public class GraphDB {
     /** Your instance variables for storing the graph. You should consider
      * creating helper classes, e.g. Node, Edge, etc. */
     //public ArrayList<Edge> edges
-    public HashMap<Long, Node> nodes;
+    private HashMap<Long, Node> nodes;
+
+    public HashMap<Long, Node> nodes() {
+        return nodes;
+    }
 
     /**
      * Example constructor shows how to create and start an XML parser.
@@ -65,7 +68,7 @@ public class GraphDB {
         }*/
         HashMap<Long, Node> thing = new HashMap<>();
         for (long v : nodes.keySet()) {
-            if (!nodes.get(v).adjacent.isEmpty()) {
+            if (!nodes.get(v).adjacent().isEmpty()) {
                 thing.put(v, nodes.get(v));
             }
         }
@@ -80,7 +83,7 @@ public class GraphDB {
 
     /** Returns ids of all vertices adjacent to v. */
     Iterable<Long> adjacent(long v) {
-        return nodes.get(v).adjacent; //.keySet();
+        return nodes.get(v).adjacent(); //.keySet();
     }
 
     /** Returns the Euclidean distance between vertices v and w, where Euclidean distance
@@ -88,7 +91,7 @@ public class GraphDB {
     double distance(long v, long w) {
         Node nv = nodes.get(v);
         Node nw = nodes.get(w);
-        return Math.sqrt(Math.pow((nv.lon - nw.lon), 2) + Math.pow((nv.lat - nw.lat), 2));
+        return Math.sqrt(Math.pow((nv.lon() - nw.lon()), 2) + Math.pow((nv.lat() - nw.lat()), 2));
     }
 
     /** Returns the vertex id closest to the given longitude and latitude. */
@@ -117,12 +120,12 @@ public class GraphDB {
 
     /** Longitude of vertex v. */
     double lon(long v) {
-        return nodes.get(v).lon;
+        return nodes.get(v).lon();
     }
 
     /** Latitude of vertex v. */
     double lat(long v) {
-        return nodes.get(v).lat;
+        return nodes.get(v).lat();
     }
 
     /*addNode (){

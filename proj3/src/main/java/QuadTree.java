@@ -24,12 +24,12 @@ public class QuadTree {
         lrlat = llai;
         filename = f;
         //depth = f.length();
-        res = 49/(Math.pow(2, f.length()-1));
+        res = 49 / (Math.pow(2, f.length() - 1));
         if (f.length() == 7) { //filename length is depth
             children = null;
         } else {
             String fn2;
-            if (filename == "root") {
+            if (filename.equals("root")) {
                 fn2 = "";
                 //depth = 0;
             } else {
@@ -37,12 +37,12 @@ public class QuadTree {
                 //depth = filename.length();
             }
             double childWidth = Math.abs((uloi - lloi) / 2.0);
-            double childHeight= Math.abs((ulai - llai) / 2.0);
+            double childHeight = Math.abs((ulai - llai) / 2.0);
             double midWidth = uloi + childWidth;
             double midHeight = ulai - childHeight;
             QuadTree q1 = new QuadTree(uloi, ulai, midWidth, midHeight, fn2 + "1");
             QuadTree q2 = new QuadTree(midWidth, ulai, lloi, midHeight, fn2 + "2");
-            QuadTree q3 = new QuadTree(uloi, midHeight, midWidth, llai, fn2+ "3");
+            QuadTree q3 = new QuadTree(uloi, midHeight, midWidth, llai, fn2 + "3");
             QuadTree q4 = new QuadTree(midWidth, midHeight, lloi, llai, fn2 + "4");
             children = new ArrayList<>(Arrays.asList(q1, q2, q3, q4));
         }

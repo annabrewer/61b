@@ -6,11 +6,11 @@ import java.util.HashMap;
 
 public class Node {
     //public HashMap<Long, Node> adjacent;
-    public ArrayList<Long> adjacent;
+    private ArrayList<Long> adjacent;
 
-    public long id;
-    public double lat;
-    public double lon;
+    private long id;
+    private double lat;
+    private double lon;
 
     public Node(long idInput, double latInput, double lonInput) {
         id = idInput;
@@ -19,4 +19,19 @@ public class Node {
         adjacent = new ArrayList<>();
     }
 
+    public ArrayList<Long> adjacent(){
+        return adjacent;
+    }
+
+    public long id() {
+        return id;
+    }
+
+    public double lat() {
+        return lat;
+    }
+
+    public double lon() {
+        return lon;
+    }
 }

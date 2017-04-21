@@ -1,7 +1,6 @@
 /**
  * Created by Anna on 4/20/17.
  */
-import java.util.Comparator;
 
 /**
  * Created by Anna on 3/23/17.
@@ -9,11 +8,35 @@ import java.util.Comparator;
 public class SearchNode implements Comparable<SearchNode> {
 
     //public WorldState worldState;
-    public double totalDistance;
-    public Long index;
-    public SearchNode prevNode;
-    public GraphDB graph;
-    public Long endIndex;
+    private double totalDistance;
+    private Long index;
+    private SearchNode prevNode;
+    private GraphDB graph;
+    private Long endIndex;
+
+    public double totalDistance() {
+        return totalDistance;
+    }
+
+    public void setTotalDistance(double d) {
+        totalDistance = d;
+    }
+
+    public Long index() {
+        return index;
+    }
+
+    public SearchNode prevNode() {
+        return prevNode;
+    }
+
+    public GraphDB graph() {
+        return graph;
+    }
+
+    public Long endIndex() {
+        return endIndex;
+    }
 
     public SearchNode(Long ind, double dist, SearchNode prev, GraphDB g, Long end) {
         //worldState = w;

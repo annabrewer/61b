@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.LinkedList;
-import java.util.HashMap;
 
 
 /**
@@ -44,10 +43,9 @@ public class GraphBuildingHandler extends DefaultHandler {
     private String activeState = "";
     private final GraphDB g;
     //public HashMap<Long, ArrayList<Long>> temp = new HashMap<>();
-    public LinkedList<Long> temp = new LinkedList<>();
-    public boolean valid = false;
-    public long lastNodeID = 0L;
-    public ArrayList<String> names = new ArrayList<>();
+    private LinkedList<Long> temp = new LinkedList<>();
+    private boolean valid = false;
+    private ArrayList<String> names = new ArrayList<>();
 
 
     public GraphBuildingHandler(GraphDB g) {
@@ -81,9 +79,11 @@ public class GraphBuildingHandler extends DefaultHandler {
 
             /* TO DO Use the above information to save a "node" to somewhere. */
             /* Hint: A graph-like structure would be nice. */
-            if (!g.nodes.containsKey(Long.parseLong(attributes.getValue("id")))) {
-                Node n = new Node(Long.parseLong(attributes.getValue("id")), Double.parseDouble(attributes.getValue("lat")), Double.parseDouble(attributes.getValue("lon")));
-                g.nodes.put(n.id, n);
+            if (!g.nodes().containsKey(Long.parseLong(attributes.getValue("id")))) {
+                Node n = new Node(Long.parseLong(attributes.getValue("id")),
+                        Double.parseDouble(attributes.getValue("lat")),
+                        Double.parseDouble(attributes.getValue("lon")));
+                g.nodes().put(n.id(), n);
             }
 
         } else if (qName.equals("way")) {
@@ -95,7 +95,7 @@ public class GraphBuildingHandler extends DefaultHandler {
             /* While looking at a way, we found a <nd...> tag. */
             //System.out.println("Id of a node in this way: " + attributes.getValue("ref"));
 
-            /* TO DO Use the above id to make "possible" connections between the nodes in this way */
+            /* TO DO Use the above id to make "possible" connections between the nodes in this way
             /* Hint1: It would be useful to remember what was the last node in this way. */
             /* Hint2: Not all ways are valid. So, directly connecting the nodes here would be
             cumbersome since you might have to remove the connections if you later see a tag that
@@ -118,30 +118,29 @@ public class GraphBuildingHandler extends DefaultHandler {
             if (k.equals("maxspeed")) {
                 //System.out.println("Max Speed: " + v);
                 /* TO DO set the max speed of the "current way" here. */
-
+                int i; //filler
             } else if (k.equals("highway")) {
                 //System.out.println("Highway type: " + v);
                 /* TO DO Figure out whether this way and its connections are valid. */
                 if (ALLOWED_HIGHWAY_TYPES.contains(v)) {
                     valid = true;
-                }
-                else {
+                } else {
                     valid = false;
                 }
                 /* Hint: Setting a "flag" is good enough! */
             } else if (k.equals("name")) {
                 //System.out.println("Way Name: " + v);
                 //do we need to do smthn?
+                int i;
             }
 //            System.out.println("Tag with k=" + k + ", v=" + v + ".");
         } else if (activeState.equals("node") && qName.equals("tag") && attributes.getValue("k")
                 .equals("name")) {
+            int i;
             /* While looking at a node, we found a <tag...> with k="name". */
             /* TO DO Create a location. */
             //what does it mean check the first if-case????
-            /*if (lastNodeID != 0L) {
 
-            }
             /* Hint: Since we found this <tag...> INSIDE a node, we should probably remember which
             node this tag belongs to. Remember XML is parsed top-to-bottom, so probably it's the
             last node that you looked at (check the first if-case). */
@@ -182,8 +181,8 @@ public class GraphBuildingHandler extends DefaultHandler {
             //int currIndex = 2; //temp.get(2);
             if (valid) {
                 for (int i = 0; i < temp.size() - 1; i++) {
-                    g.nodes.get(temp.get(i)).adjacent.add(temp.get(i + 1));
-                    g.nodes.get(temp.get(i + 1)).adjacent.add(temp.get(i));
+                    g.nodes().get(temp.get(i)).adjacent().add(temp.get(i + 1));
+                    g.nodes().get(temp.get(i + 1)).adjacent().add(temp.get(i));
                 }
             }
             valid = false;

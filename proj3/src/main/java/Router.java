@@ -1,5 +1,3 @@
-import sun.awt.image.ImageWatched;
-
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.ArrayList;
@@ -67,26 +65,26 @@ public class Router {
         SearchNode curr = queue.poll();
         HashSet<Long> visited = new HashSet<>();
 
-        while (!curr.index.equals(destKey)) {
-            ArrayList<Long> s = g.nodes.get(curr.index).adjacent;
+        while (!curr.index().equals(destKey)) {
+            ArrayList<Long> s = g.nodes().get(curr.index()).adjacent();
             for (Long l : s) {
                 if (!visited.contains(l)) {
                     SearchNode sn = new SearchNode(l, g.distance(startKey, l), curr, g, destKey);
-                    if (g.distance(startKey, l) < curr.totalDistance + g.distance(l, curr.index)) {
-                        sn.totalDistance = curr.totalDistance + g.distance(l, curr.index);
+                    if (g.distance(startKey, l) < curr.totalDistance() + g.distance(l, curr.index())) {
+                        sn.setTotalDistance(curr.totalDistance() + g.distance(l, curr.index()));
                     }
                     queue.add(sn);
                 }
             }
-            visited.add(curr.index);
+            visited.add(curr.index());
             curr = queue.poll();
         }
 
         LinkedList<Long> soln = new LinkedList<>();
         while (curr != null) {
             //dont need to find distance ("num moves")
-            soln.add(curr.index);
-            curr = curr.prevNode;
+            soln.add(curr.index());
+            curr = curr.prevNode();
         }
         Collections.reverse(soln);
 
@@ -109,8 +107,10 @@ public class Router {
                 while (startKey != destKey) {
                 ArrayList<Long> s = g.nodes.get(curr.index).adjacent;
         for (Long l : s) {
-        SearchNode sn = new SearchNode(l, curr.totalDistance + g.distance(l, curr.index), curr, g, destKey);
-        if (curr.prevNode == null || !curr.prevNode.index.equals(sn.index)) { // !visited.contains(sn)) { //
+        SearchNode sn = new SearchNode(l, curr.totalDistance + g.distance(l,
+        curr.index), curr, g, destKey);
+        if (curr.prevNode == null || !curr.prevNode.index.equals(sn.index))
+        { // !visited.contains(sn)) { //
         queue.add(sn);
         }
         else {
