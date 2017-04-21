@@ -1,11 +1,10 @@
 import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * This class provides a shortestPath method for finding routes between two points
@@ -63,45 +62,26 @@ public class Router {
         Long destKey = g.closest(destlon, destlat);
 
         PriorityQueue<SearchNode> queue = new PriorityQueue<>();
-        //Long dist = 0L;
-        //(Long ind, double dist, SearchNode prev, GraphDB g, Long end)
         SearchNode initialNode = new SearchNode(startKey, 0L, null, g, destKey);
         queue.add(initialNode);
         SearchNode curr = queue.poll();
-        //LinkedList<SearchNode> visited = new LinkedList<>();
-        while (startKey != destKey) {
+        HashSet<Long> visited = new HashSet<>();
+
+        while (!curr.index.equals(destKey)) {
             ArrayList<Long> s = g.nodes.get(curr.index).adjacent;
             for (Long l : s) {
-                SearchNode sn = new SearchNode(l, curr.totalDistance + g.distance(l, curr.index), curr, g, destKey);
-                if (curr.prevNode == null || !curr.prevNode.index.equals(sn.index)) { // !visited.contains(sn)) { //
+                if (!visited.contains(l)) {
+                    SearchNode sn = new SearchNode(l, g.distance(startKey, l), curr, g, destKey);
+                    if (g.distance(startKey, l) < curr.totalDistance + g.distance(l, curr.index)) {
+                        sn.totalDistance = curr.totalDistance + g.distance(l, curr.index);
+                    }
                     queue.add(sn);
                 }
-                else {
-                    break;
-                    //continue;
-                    //curr = curr.prevNode;
-                    //if (sn.totalDistance < curr.prevNode.totalDistance) {
-                        //sn.prevNode = curr.prevNode;
-                    //}
-                }
-                    /*(!sn.index.equals(curr.prevNode.index)) { //replace index w distance??
-                    queue.add(sn);
-                } else {
-                    System.out.println(sn.index);
-                    System.out.println(curr.index);
-                    System.out.println(curr.prevNode.index);
-                    break;
-                }*/
             }
-            if (queue.size() != 0) {
-                curr = queue.poll();
-            } else { //can delete this case??
-                System.out.println("hello");
-                break;
-                //System.out.print("o");
-            }
-            queue = new PriorityQueue<>();
+            visited.add(curr.index);
+            curr = queue.poll();
         }
+
         LinkedList<Long> soln = new LinkedList<>();
         while (curr != null) {
             //dont need to find distance ("num moves")
@@ -115,6 +95,59 @@ public class Router {
 }
 
 //OLD RATCHET IMPLEMENTATION
+
+    /*Long startKey = g.closest(stlon, stlat);
+    Long destKey = g.closest(destlon, destlat);
+
+    PriorityQueue<SearchNode> queue = new PriorityQueue<>();
+    //Long dist = 0L;
+    //(Long ind, double dist, SearchNode prev, GraphDB g, Long end)
+    SearchNode initialNode = new SearchNode(startKey, 0L, null, g, destKey);
+        queue.add(initialNode);
+                SearchNode curr = queue.poll();
+                //LinkedList<SearchNode> visited = new LinkedList<>();
+                while (startKey != destKey) {
+                ArrayList<Long> s = g.nodes.get(curr.index).adjacent;
+        for (Long l : s) {
+        SearchNode sn = new SearchNode(l, curr.totalDistance + g.distance(l, curr.index), curr, g, destKey);
+        if (curr.prevNode == null || !curr.prevNode.index.equals(sn.index)) { // !visited.contains(sn)) { //
+        queue.add(sn);
+        }
+        else {
+        break;
+        //continue;
+        //curr = curr.prevNode;
+        //if (sn.totalDistance < curr.prevNode.totalDistance) {
+        //sn.prevNode = curr.prevNode;
+        //}
+        }
+                    /*(!sn.index.equals(curr.prevNode.index)) { //replace index w distance??
+                    queue.add(sn);
+                } else {
+                    System.out.println(sn.index);
+                    System.out.println(curr.index);
+                    System.out.println(curr.prevNode.index);
+                    break;
+                }*/
+        /*}
+        if (queue.size() != 0) {
+        curr = queue.poll();
+        } else { //can delete this case??
+        System.out.println("hello");
+        break;
+        //System.out.print("o");
+        }
+        queue = new PriorityQueue<>();
+        }
+        LinkedList<Long> soln = new LinkedList<>();
+        while (curr != null) {
+        //dont need to find distance ("num moves")
+        soln.add(curr.index);
+        curr = curr.prevNode;
+        }
+        Collections.reverse(soln);
+
+        return soln;*/
 
         /*while(!startKey.equals(destKey)) {
             rv.add(startKey);
