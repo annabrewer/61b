@@ -42,7 +42,7 @@ public class GraphBuildingHandler extends DefaultHandler {
                     "secondary_link", "tertiary_link"));
     private String activeState = "";
     private final GraphDB g;
-    public HashMap<Long, HashMap<Long, Node>> temp = new HashMap<>();
+    public HashMap<Long, ArrayList<Long>> temp = new HashMap<>();
     public boolean valid;
     public long lastNodeID = 0L;
 
@@ -94,11 +94,11 @@ public class GraphBuildingHandler extends DefaultHandler {
             cumbersome since you might have to remove the connections if you later see a tag that
             makes this way invalid. Instead, think of keeping a list of possible connections and
             remember whether this way is valid or not. */
-            HashMap<Long, Node> adj = new HashMap<>();
+            ArrayList<Long> adj = new ArrayList<>();
             long currNodeID = Long.parseLong(attributes.getValue("ref"));
             if (lastNodeID != 0L) {
-                adj.put(lastNodeID, g.nodes.get(lastNodeID));
-                temp.get(lastNodeID).put(currNodeID, g.nodes.get(currNodeID));
+                adj.add(lastNodeID);
+                temp.get(lastNodeID).add(currNodeID);
             }
             temp.put(currNodeID, adj);
             lastNodeID = currNodeID;

@@ -31,8 +31,8 @@ public class GraphDB {
      */
     public GraphDB(String dbPath) {
 
+        nodes = new HashMap<>();
         try {
-            nodes = new HashMap<>();
             File inputFile = new File(dbPath);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
@@ -81,7 +81,7 @@ public class GraphDB {
 
     /** Returns ids of all vertices adjacent to v. */
     Iterable<Long> adjacent(long v) {
-        return nodes.get(v).adjacent.keySet();
+        return nodes.get(v).adjacent; //.keySet();
     }
 
     /** Returns the Euclidean distance between vertices v and w, where Euclidean distance

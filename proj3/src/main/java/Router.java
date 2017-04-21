@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.ArrayList;
 
 /**
  * This class provides a shortestPath method for finding routes between two points
@@ -56,9 +57,10 @@ public class Router {
 
         while(!startKey.equals(destKey)) {
             rv.add(startKey);
-            Set<Long> s = g.nodes.get(startKey).adjacent.keySet();
-            Iterator<Long> it = s.iterator();
-            Long rand = it.next();
+            //Set<Long> s = g.nodes.get(startKey).adjacent.keySet();
+            ArrayList<Long> s = g.nodes.get(startKey).adjacent;
+            //Iterator<Long> it = s.iterator();
+            Long rand = s.get(0); //it.next();
             double smallest = g.distance(rand, startKey) + g.distance(rand, destKey);
             for (Long l : s) {
                 double temp = g.distance(l, startKey) + g.distance(l, destKey);
