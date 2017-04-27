@@ -7,66 +7,88 @@ import java.awt.Color;
 public class SeamCarver {
 
     Picture pic;
-    int[][] minArray;
-    int[][] minArrayHoriz;
+    double[][] minArray;
+    //int[][] minArrayHoriz;
 
     public SeamCarver(Picture picInput) {
-        pic = picInput;
+        pic = new Picture(picInput);
     }
 
-    public int energy(int c, int r) {
+    public double energy(int c, int r) {
         int aboveRow = r - 1;
         int belowRow = r + 1;
         int leftCol = c - 1;
         int rightCol = c + 1;
 
         if (c == 0) {
-            leftCol = pic.width();
+            leftCol = pic.width() - 1;
         }
-        else if (c == pic.width()) {
+        else if (c == pic.width() - 1) {
             rightCol = 0;
         }
         if (r == 0) {
-            aboveRow = pic.height();
+            aboveRow = pic.height() - 1;
         }
-        else if (r == pic.height()) {
+        else if (r == pic.height() - 1) {
             belowRow = 0;
         }
 
-        Color above = pic.get(c, aboveRow);
-        Color below = pic.get(c, belowRow);
         Color left = pic.get(leftCol, r);
         Color right = pic.get(rightCol, r);
+        Color above = pic.get(c, aboveRow);
+        Color below = pic.get(c, belowRow);
 
-        int rx = right.getRed() - left.getRed();
-        int gx = right.getGreen() - left.getGreen();
-        int bx = right.getBlue() - left.getBlue();
+        double rx = right.getRed() - left.getRed();
+        double gx = right.getGreen() - left.getGreen();
+        double bx = right.getBlue() - left.getBlue();
 
-        int ry = below.getRed() - above.getRed();
-        int gy = below.getGreen() - above.getGreen();
-        int by = below.getBlue() - above.getBlue();
+        double ry = below.getRed() - above.getRed();
+        double gy = below.getGreen() - above.getGreen();
+        double by = below.getBlue() - above.getBlue();
 
-        return rx * rx + gx * gx + bx * bx + ry * ry + gy * gy + by * by;
+        return (rx * rx) + (gx * gx) + (bx * bx) + (ry * ry) + (gy * gy) + (by * by);
     }
 
     public int[] findVerticalSeam() {
-        minArray = new int[pic.height()][pic.width()];
+
+        minArray = new double[pic.height()][pic.width()];
         for (int i = 0; i < pic.width(); i++) {
             minArray[0][i] = energy(i, 0);
         }
         for (int i = 1; i < pic.height(); i++) {
             for (int j = 0; j < pic.width(); j++) {
-                minArray[i][j] = energy(i, j) + Math.min(Math.min(minArray[i - 1][j - 1], minArray[i - 1][j]), minArray[i - 1][j + 1]);
+                //int aboveLeft = j - 1;
+                //int aboveRight = j + 1;
+
+                if (j == 0) {
+                    minArray[i][j] = energy(j, i) + Math.min(minArray[i - 1][j + 1], minArray[i - 1][j]);
+                }
+                else if (j == pic.width() - 1) {
+                    minArray[i][j] = energy(j, i) + Math.min(minArray[i-1][j - 1], minArray[i - 1][j]);
+                }
+                else {
+                    minArray[i][j] = energy(j, i) + Math.min(Math.min(minArray[i-1][j - 1], minArray[i - 1][j]), minArray[i - 1][j + 1]);
+                }
+
             }
         }
 
-
-
         int[] rv = new int[pic.height()];
+        double[] firstRow = minArray[pic.height() - 1];
+        int ind = minIndex(firstRow, 0, pic.width());
+        rv[pic.height() - 1] = ind;
 
-        for (int i = pic.height(); i > 0; i--) {
-            int ind = minIndex(minArray, i);
-            rv[i] = ind;
+        for (int i = pic.height() - 2; i >= 0; i--) {
+            if (ind == 0) {
+                rv[i] = (minIndex(minArray[i], ind, ind + 2));
+            }
+            else if (ind == pic.width() - 1) {
+                rv[i] = (minIndex(minArray[i], ind - 1, ind + 1));
+            }
+            else {
+                rv[i] = (minIndex(minArray[i], ind - 1, ind + 2));
+            }
+            ind = rv[i];
         }
 
         return rv;
@@ -74,32 +96,68 @@ public class SeamCarver {
     }
 
     public int[] findHorizontalSeam() {
-        minArrayHoriz = new int[pic.width()][pic.height()];
+
+        minArray = new double[pic.width()][pic.height()];
+
         for (int i = 0; i < pic.height(); i++) {
-            minArrayHoriz[0][i] = energy(i, 0);
+            minArray[0][i] = energy(0, i);
         }
+
         for (int i = 1; i < pic.width(); i++) {
             for (int j = 0; j < pic.height(); j++) {
-                minArrayHoriz[i][j] = energy(i, j) + Math.min(Math.min(minArrayHoriz[i - 1][j - 1], minArrayHoriz[i - 1][j]), minArrayHoriz[i - 1][j + 1]);
+                //int aboveLeft = j - 1;
+                //int aboveRight = j + 1;
+
+                if (j == 0) {
+                    minArray[i][j] = energy(i, j) + Math.min(minArray[i - 1][j + 1], minArray[i - 1][j]);
+                }
+                else if (j == pic.height() - 1) {
+                    minArray[i][j] = energy(i, j) + Math.min(minArray[i - 1][j - 1], minArray[i - 1][j]);
+                }
+                else {
+                    minArray[i][j] = energy(i, j) + Math.min(Math.min(minArray[i - 1][j - 1], minArray[i - 1][j]), minArray[i - 1][j + 1]);
+                }
+
             }
         }
 
-        int[] rv = new int[pic.width()];
+        int[] rv = new int[pic.height()];
+        double[] firstRow = minArray[pic.height() - 1];
+        int ind = minIndex(firstRow, 0, pic.width());
 
-        for (int i = pic.height(); i > 0; i--) {
-            int ind = minIndex(minArrayHoriz, i);
-            rv[i] = ind;
+        for (int i = pic.height() - 2; i >= 0; i--) {
+
+            if (ind == 0) {
+                rv[i] = (minIndex(minArray[i], ind, ind + 2));
+            }
+            else if (ind == pic.width() - 1) {
+                rv[i] = (minIndex(minArray[i], ind - 1, ind + 1));
+            }
+            else {
+                rv[i] = (minIndex(minArray[i], ind - 1, ind + 2));
+            }
+            ind = rv[i];
         }
 
         return rv;
     }
 
-    public int minIndex(int[][] a, int r) {
-        int index = 0;
-        int[] arr = a[r];
-        int min = arr[index];
+    public int[][] rotateArray(int[][] arr) {
+        int[][] newArray = new int[arr[0].length][arr.length];
+        for(int i=0; i<arr[0].length; i++){
+            for(int j=arr.length-1; j>=0; j--){
+                newArray[i][j] = arr[j][i];
+            }
+        }
+        return newArray;
+    }
 
-        for (int i=1; i<arr.length; i++){
+    public int minIndex(double[] a, int startIndex, int endIndex) {
+        int index = startIndex;
+        double[] arr = a;
+        double min = arr[index];
+
+        for (int i = startIndex + 1; i < endIndex; i++){
             if (arr[i] < min ){
                 min = arr[i];
                 index = i;
