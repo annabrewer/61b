@@ -130,7 +130,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         while (index < size && leftIndex(index) <= size && rightIndex(index) <= size ) {
-            int ind = (int) Math.min(contents[leftIndex(index)].priority(), contents[rightIndex(index)].priority());
+            int ind;
+            if (contents[rightIndex(index)].priority() >  contents[index].priority()){
+                ind = leftIndex(index);
+            }
+            else {
+                ind = (int) Math.min(contents[leftIndex(index)].priority(), contents[rightIndex(index)].priority());
+            }
             if (contents[index].priority() > contents[leftIndex(index)].priority() || contents[index].priority() > contents[rightIndex(index)].priority()) {
                 /*Node temp = contents[ind];
                 contents[ind] = contents[index];
@@ -178,14 +184,12 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public T removeMin() {
+        swap(size, 1);
         Node temp = contents[size];
-        Node temp2 = contents[1];
-        contents[size] = contents[1];
         contents[size] = null;
         size -= 1;
-        contents[1] = temp;
         sink(1);
-        return temp2.item();
+        return temp.item();
     }
 
     /**
