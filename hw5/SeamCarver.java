@@ -6,8 +6,8 @@ import java.awt.Color;
 
 public class SeamCarver {
 
-    Picture pic;
-    double[][] minArray;
+    private Picture pic;
+    private double[][] minArray;
     //int[][] minArrayHoriz;
 
     public SeamCarver(Picture picInput) {
@@ -22,12 +22,14 @@ public class SeamCarver {
 
         if (c == 0) {
             leftCol = pic.width() - 1;
-        } else if (c == pic.width() - 1) {
+        }
+        if (c == pic.width() - 1) {
             rightCol = 0;
         }
         if (r == 0) {
             aboveRow = pic.height() - 1;
-        } else if (r == pic.height() - 1) {
+        }
+        if (r == pic.height() - 1) {
             belowRow = 0;
         }
 
@@ -119,15 +121,15 @@ public class SeamCarver {
             }
         }
 
-        int[] rv = new int[pic.height()];
-        double[] firstRow = minArray[pic.height() - 1];
-        int ind = minIndex(firstRow, 0, pic.width());
+        int[] rv = new int[pic.width()];
+        double[] firstRow = minArray[pic.width() - 1];
+        int ind = minIndex(firstRow, 0, pic.height());
+        rv[pic.width() - 1] = ind;
 
-        for (int i = pic.height() - 2; i >= 0; i--) {
-
+        for (int i = pic.width() - 2; i >= 0; i--) {
             if (ind == 0) {
                 rv[i] = (minIndex(minArray[i], ind, ind + 2));
-            } else if (ind == pic.width() - 1) {
+            } else if (ind == pic.height() - 1) {
                 rv[i] = (minIndex(minArray[i], ind - 1, ind + 1));
             } else {
                 rv[i] = (minIndex(minArray[i], ind - 1, ind + 2));
@@ -138,17 +140,7 @@ public class SeamCarver {
         return rv;
     }
 
-    public int[][] rotateArray(int[][] arr) {
-        int[][] newArray = new int[arr[0].length][arr.length];
-        for (int i = 0; i < arr[0].length; i++) {
-            for (int j = arr.length - 1; j >= 0; j--) {
-                newArray[i][j] = arr[j][i];
-            }
-        }
-        return newArray;
-    }
-
-    public int minIndex(double[] a, int startIndex, int endIndex) {
+    private int minIndex(double[] a, int startIndex, int endIndex) {
         int index = startIndex;
         double[] arr = a;
         double min = arr[index];
@@ -162,11 +154,11 @@ public class SeamCarver {
         return index;
     }
 
-    public static void removeHorizontalSeam(int[] seam) {
+    public void removeHorizontalSeam(int[] seam) {
         //SeamCarver.removeHorizontalSeam(pic, seam);
     }
 
-    public static void removeVerticalSeam(int[] seam) {
+    public void removeVerticalSeam(int[] seam) {
         //
     }
 
@@ -179,6 +171,6 @@ public class SeamCarver {
     }
 
     public Picture picture() {
-        return pic;
+        return new Picture(pic);
     }
 }
