@@ -22,14 +22,12 @@ public class SeamCarver {
 
         if (c == 0) {
             leftCol = pic.width() - 1;
-        }
-        else if (c == pic.width() - 1) {
+        } else if (c == pic.width() - 1) {
             rightCol = 0;
         }
         if (r == 0) {
             aboveRow = pic.height() - 1;
-        }
-        else if (r == pic.height() - 1) {
+        } else if (r == pic.height() - 1) {
             belowRow = 0;
         }
 
@@ -61,13 +59,14 @@ public class SeamCarver {
                 //int aboveRight = j + 1;
 
                 if (j == 0) {
-                    minArray[i][j] = energy(j, i) + Math.min(minArray[i - 1][j + 1], minArray[i - 1][j]);
-                }
-                else if (j == pic.width() - 1) {
-                    minArray[i][j] = energy(j, i) + Math.min(minArray[i-1][j - 1], minArray[i - 1][j]);
-                }
-                else {
-                    minArray[i][j] = energy(j, i) + Math.min(Math.min(minArray[i-1][j - 1], minArray[i - 1][j]), minArray[i - 1][j + 1]);
+                    minArray[i][j] = energy(j, i) + Math.min(minArray[i - 1][j + 1],
+                            minArray[i - 1][j]);
+                } else if (j == pic.width() - 1) {
+                    minArray[i][j] = energy(j, i) + Math.min(minArray[i - 1][j - 1],
+                            minArray[i - 1][j]);
+                } else {
+                    minArray[i][j] = energy(j, i) + Math.min(Math.min(minArray[i - 1][j - 1],
+                            minArray[i - 1][j]), minArray[i - 1][j + 1]);
                 }
 
             }
@@ -81,11 +80,9 @@ public class SeamCarver {
         for (int i = pic.height() - 2; i >= 0; i--) {
             if (ind == 0) {
                 rv[i] = (minIndex(minArray[i], ind, ind + 2));
-            }
-            else if (ind == pic.width() - 1) {
+            } else if (ind == pic.width() - 1) {
                 rv[i] = (minIndex(minArray[i], ind - 1, ind + 1));
-            }
-            else {
+            } else {
                 rv[i] = (minIndex(minArray[i], ind - 1, ind + 2));
             }
             ind = rv[i];
@@ -109,13 +106,14 @@ public class SeamCarver {
                 //int aboveRight = j + 1;
 
                 if (j == 0) {
-                    minArray[i][j] = energy(i, j) + Math.min(minArray[i - 1][j + 1], minArray[i - 1][j]);
-                }
-                else if (j == pic.height() - 1) {
-                    minArray[i][j] = energy(i, j) + Math.min(minArray[i - 1][j - 1], minArray[i - 1][j]);
-                }
-                else {
-                    minArray[i][j] = energy(i, j) + Math.min(Math.min(minArray[i - 1][j - 1], minArray[i - 1][j]), minArray[i - 1][j + 1]);
+                    minArray[i][j] = energy(i, j) + Math.min(minArray[i - 1][j + 1],
+                            minArray[i - 1][j]);
+                } else if (j == pic.height() - 1) {
+                    minArray[i][j] = energy(i, j) + Math.min(minArray[i - 1][j - 1],
+                            minArray[i - 1][j]);
+                } else {
+                    minArray[i][j] = energy(i, j) + Math.min(Math.min(minArray[i - 1][j - 1],
+                            minArray[i - 1][j]), minArray[i - 1][j + 1]);
                 }
 
             }
@@ -129,11 +127,9 @@ public class SeamCarver {
 
             if (ind == 0) {
                 rv[i] = (minIndex(minArray[i], ind, ind + 2));
-            }
-            else if (ind == pic.width() - 1) {
+            } else if (ind == pic.width() - 1) {
                 rv[i] = (minIndex(minArray[i], ind - 1, ind + 1));
-            }
-            else {
+            } else {
                 rv[i] = (minIndex(minArray[i], ind - 1, ind + 2));
             }
             ind = rv[i];
@@ -144,8 +140,8 @@ public class SeamCarver {
 
     public int[][] rotateArray(int[][] arr) {
         int[][] newArray = new int[arr[0].length][arr.length];
-        for(int i=0; i<arr[0].length; i++){
-            for(int j=arr.length-1; j>=0; j--){
+        for (int i = 0; i < arr[0].length; i++) {
+            for (int j = arr.length - 1; j >= 0; j--) {
                 newArray[i][j] = arr[j][i];
             }
         }
@@ -157,8 +153,8 @@ public class SeamCarver {
         double[] arr = a;
         double min = arr[index];
 
-        for (int i = startIndex + 1; i < endIndex; i++){
-            if (arr[i] < min ){
+        for (int i = startIndex + 1; i < endIndex; i++) {
+            if (arr[i] < min) {
                 min = arr[i];
                 index = i;
             }
