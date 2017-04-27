@@ -22,6 +22,9 @@ public class SeamCarver {
 
         if (c == 0) {
             leftCol = pic.width() - 1;
+            /*if (c == pic.width() - 1) {
+                rightCol = 0;
+            }*/
         }
         if (c == pic.width() - 1) {
             rightCol = 0;
@@ -60,6 +63,18 @@ public class SeamCarver {
                 //int aboveLeft = j - 1;
                 //int aboveRight = j + 1;
 
+                /*int minInd = j - 1;
+                int maxInd = j + 2;
+
+                if (j == 0) {
+                    minInd = j;
+                }
+                if (j == pic.width() - 1) {
+                    maxInd = j + 1;
+                }*/
+
+                //minArray[i][j] = energy(j, i) +  minIndex(minArray[i - 1], minInd, maxInd);
+
                 if (j == 0) {
                     minArray[i][j] = energy(j, i) + Math.min(minArray[i - 1][j + 1],
                             minArray[i - 1][j]);
@@ -70,7 +85,6 @@ public class SeamCarver {
                     minArray[i][j] = energy(j, i) + Math.min(Math.min(minArray[i - 1][j - 1],
                             minArray[i - 1][j]), minArray[i - 1][j + 1]);
                 }
-
             }
         }
 
@@ -106,8 +120,17 @@ public class SeamCarver {
             for (int j = 0; j < pic.height(); j++) {
                 //int aboveLeft = j - 1;
                 //int aboveRight = j + 1;
-
+                int minInd = j - 1;
+                int maxInd = j + 2;
                 if (j == 0) {
+                    minInd = j;
+                }
+                if (j == pic.height() - 1) {
+                    maxInd = j + 1;
+                }
+
+                minArray[i][j] = energy(i, j) +  minIndex(minArray[i - 1], minInd, maxInd);
+                /*if (j == 0) {
                     minArray[i][j] = energy(i, j) + Math.min(minArray[i - 1][j + 1],
                             minArray[i - 1][j]);
                 } else if (j == pic.height() - 1) {
@@ -116,7 +139,7 @@ public class SeamCarver {
                 } else {
                     minArray[i][j] = energy(i, j) + Math.min(Math.min(minArray[i - 1][j - 1],
                             minArray[i - 1][j]), minArray[i - 1][j + 1]);
-                }
+                }*/
 
             }
         }
