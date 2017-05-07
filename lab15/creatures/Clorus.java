@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 
-/** An implementation of a motile pacifist photosynthesizer.
- *  @author Josh Hug
+/**
+ * Created by Anna_2 on 5/6/2017.
  */
-public class Plip extends Creature {
+public class Clorus extends Creature {
 
     /** red color. */
     private int r;
@@ -22,16 +22,16 @@ public class Plip extends Creature {
     private int b;
 
     /** creates plip with energy equal to E. */
-    public Plip(double e) {
+    public Clorus(double e) {
         super("plip");
-        r = 99;
-        g = (int) (255 * e / 2);
-        b = 76;
+        r = 34;
+        g = 0;
+        b = 231;
         energy = e;
     }
 
     /** creates a plip with energy equal to 1. */
-    public Plip() {
+    public Clorus() {
         this(1);
     }
 
@@ -43,7 +43,6 @@ public class Plip extends Creature {
      *  that you get this exactly correct.
      */
     public Color color() {
-        //g = 63;
         return color(r, g, b);
     }
 
@@ -56,28 +55,21 @@ public class Plip extends Creature {
      *  private static final variable. This is not required for this lab.
      */
     public void move() {
-        energy -= 0.15;
-        g -= 14.4;
+        energy -= 0.03;
     }
 
 
     /** Plips gain 0.2 energy when staying due to photosynthesis. */
     public void stay() {
-        energy += 0.2;
-        g += 19.2;
-        if (energy > 2) {
-            energy = 2;
-        }
-        if (g > 255) {
-            g = 255;
-        }
+        energy -= 0.01;
     }
 
     /** Plips and their offspring each get 50% of the energy, with none
      *  lost to the process. Now that's efficiency! Returns a baby
      *  Plip.
      */
-    public Plip replicate() {
+    public Clorus replicate() {
+        energy = energy / 2;
         return this;
     }
 
@@ -101,6 +93,15 @@ public class Plip extends Creature {
         if (!names.containsValue("empty")){
             return new Action(Action.ActionType.STAY);
         }
+        else if (names.containsValue("plip")) {
+            int num = (int) (Math.random() * 4);
+            Direction d = Direction.values()[num];
+            while (!names.get(d).equals("plip")) {
+                num = (int) (Math.random() * 4);
+                d = Direction.values()[num];
+            }
+            return new Action(Action.ActionType.MOVE, d);
+        }
         else if (energy >= 1) {
             int num = (int) (Math.random() * 4);
             Direction d = Direction.values()[num];
@@ -109,27 +110,19 @@ public class Plip extends Creature {
                 num = (int) (Math.random() * 4);
                 d = Direction.values()[num];
             }
-            System.out.println(num);
-            System.out.println(d);
-            System.out.println(names);
             return new Action(Action.ActionType.REPLICATE, d);
         }
-        else if (names.containsValue("clorus")) {
-            System.out.println("hi");
-            int num = (int) (Math.random() * 4);
-            Direction d = Direction.values()[num];
-            while (!names.get(d).equals("empty")) {
-                num = (int) (Math.random() * 4);
-                d = Direction.values()[num];
-            }
-            System.out.println(d);
-            System.out.println(names);
-            return new Action(Action.ActionType.MOVE, d);
+        int num = (int) (Math.random() * 4);
+        Direction d = Direction.values()[num];
+        //System.out.print(num);
+        while (!names.get(d).equals("empty")) {
+            num = (int) (Math.random() * 4);
+            d = Direction.values()[num];
         }
+        return new Action(Action.ActionType.MOVE, d);
         /*int num = (int) Math.random() * 4;
         Direction d = Direction.values()[num];
         return new Action(Action.ActionType.REPLICATE, d);*/
-        return new Action(Action.ActionType.STAY);
     }
 
 }
