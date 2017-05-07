@@ -31,6 +31,10 @@ public class AGGraphBuildingTest {
     public void testNodeCount() {
         Iterable<Long> ids = graph.vertices();
         int numberOfNodes = countIterableItems(ids);
+<<<<<<< HEAD
+        System.out.println(numberOfNodes);
+=======
+>>>>>>> 9f0d580353a325919877837b197d633649e66370
         assertFalse("Good progress, but you have not yet implemented the clean operation.",
                 numberOfNodes == 130462);
         assertFalse("Make sure you're clearing any temporary way objects when you find that"

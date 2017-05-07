@@ -4,23 +4,23 @@ ArrayDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: Helper methods for finding the next index at which to insert a value.
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: My use of the modulo operator.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: My tests were super messy.
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A: The modulo trick and a little more about the structure of the deque and the process of resizing. Also, just the fact that we had the freedom to choose how to resize and there’s more than one right way to do it.
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
-A:
+A: Start earlier.
 
 -----
 
@@ -32,19 +32,19 @@ A:
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: That I actually used accessor methods.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: Again, my tests were awful.
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A: That getRecursive needs a helper method.
 
 Q: If you wrote LinkedListDeque again, what would you do differently, if anything?
 
-A:
+A: Same thing - start earlier!
 
 -----
 
@@ -52,4 +52,4 @@ Meta:
 
 Q: This is the first time we've tried something like this. Did you like this design review process? Anything we should do differently next time?
 
-A: 
+A: Yes, I thought it was helpful. The autograder only checks for functionality and basic style, so it makes sense to have an activity like this in a class about learning to write elegant and efficient code.
