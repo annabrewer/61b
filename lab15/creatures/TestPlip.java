@@ -51,7 +51,9 @@ public class TestPlip {
         //You can create new empties with new Empty();
         //Despite what the spec says, you cannot test for Cloruses nearby yet.
         //Sorry!  
-
+        Plip p1 = new Plip(1.2);
+        Plip p2 = p1.replicate();
+        assertNotSame(p1, p2);
         Action actual = p.chooseAction(surrounded);
         Action expected = new Action(Action.ActionType.STAY);
 

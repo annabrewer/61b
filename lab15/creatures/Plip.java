@@ -79,7 +79,7 @@ public class Plip extends Creature {
      */
     public Plip replicate() {
         energy = (int) (energy / 2);
-        return this;
+        return new Plip(energy);
     }
 
     /** Plips take exactly the following actions based on NEIGHBORS:
