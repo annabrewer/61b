@@ -100,7 +100,7 @@ public class Clorus extends Creature {
                 num = (int) (Math.random() * 4);
                 d = Direction.values()[num];
             }
-            return new Action(Action.ActionType.MOVE, d);
+            return new Action(Action.ActionType.ATTACK, d);
         }
         else if (energy >= 1) {
             int num = (int) (Math.random() * 4);
